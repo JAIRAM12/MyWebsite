@@ -1,0 +1,18 @@
+.home-container {
+    background-image: url("/public/collageHome.jpg"); /* Place bg.jpg inside public/ */
+    background-size: cover; /* Makes it cover the full area */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Full height of viewport */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.content {
+    background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+    padding: 20px;
+    border-radius: 12px;
+}

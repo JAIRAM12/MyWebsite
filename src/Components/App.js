@@ -6,6 +6,8 @@ import { Content } from "antd/es/layout/layout";
 import Home from "./Home/Home";
 import Faculty from "./Faculty/Faculty";
 import AddFaculty from "./Faculty/AddFaculty";
+import FacultyInfo from "./Faculty/FacultyInfo";
+import Scoreboard from "./ScoreBoard/ScoreBoard";
 
 export default function App() {
   return (
@@ -17,8 +19,9 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/faculty" element={<Faculty />} />
-          {/* <Route path="/scoreboard" element={<Scoreboard />} /> */}
+          <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/Addfaculty" element={<AddFaculty />} />
+          <Route path="/Facultyinfo" element={<FacultyInfo />} />
         </Routes>
       </Content>
     </Layout>

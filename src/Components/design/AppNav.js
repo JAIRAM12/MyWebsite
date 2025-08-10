@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import './CSS components/GlassNavBar.css'; // Assuming you have a CSS file for styling
+import './CSS components/GlassNavBar.css';
 
 const { Header } = Layout;
 
@@ -17,10 +17,18 @@ export default function AppNav() {
     ];
 
     return (
-        <Header className="d-flex glass-header text-black">
-            <div className="fw-bold me-3 text-black">
-                My Website
+        <Header className="d-flex glass-header text-black align-items-center">
+            {/* Logo + Site Name */}
+            <div className="d-flex align-items-center me-3">
+                <img 
+                    src="/logo.jpg" // replace with your logo path
+                    alt="Website Logo"
+                    style={{ height: "40px", marginRight: "10px",  borderRadius: "50%" }}
+                />
+                <span className="fw-bold text-black">My Website</span>
             </div>
+
+            {/* Navigation Menu */}
             <Menu
                 mode="horizontal"
                 selectedKeys={[selectedKey]}
@@ -30,5 +38,4 @@ export default function AppNav() {
             />
         </Header>
     );
-
 }
