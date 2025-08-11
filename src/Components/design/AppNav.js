@@ -21,7 +21,7 @@ export default function AppNav() {
             {/* Logo + Site Name */}
             <div className="d-flex align-items-center me-3">
                 <img 
-                    src="/logo.jpg" // replace with your logo path
+                    src="/images/logo.jpg" // replace with your logo path
                     alt="Website Logo"
                     style={{ height: "40px", marginRight: "10px",  borderRadius: "50%" }}
                 />
