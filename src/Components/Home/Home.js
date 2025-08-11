@@ -64,23 +64,6 @@ export default function Home() {
         <h1 className="display-9">PLACEMENTS</h1>
       </div>
       <AppTable columns={placementColumns} dataSource={placementData} pagination={false}/>
-      {/* <table className="table">
-        <thead>
-          <tr>
-            <th>S.NO</th>
-            <th>COMPANY</th>
-            <th>ROLE</th>
-            <th>LPA</th>
-            <th>BATCH</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><th>1</th><td>WILEY EDGE</td><td>SOFTWARE DEV</td><td>9-LPA</td><td>2023</td></tr>
-          <tr><th>2</th><td>TCS</td><td>PROGRAM TRAINEE</td><td>8-LPA</td><td>2023</td></tr>
-          <tr><th>3</th><td>VIRTUSA</td><td>SOFTWARE ENGINEER</td><td>7-LPA</td><td>2023</td></tr>
-        </tbody>
-      </table> */}
-
       {/* Campus Lifestyle */}
       <section className="my-4">
         <div className="py-4">

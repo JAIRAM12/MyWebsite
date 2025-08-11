@@ -19,8 +19,8 @@ export default function FacultyTable({ data }) {
             dataIndex: 'facultyid',
             key: 'facultyid',
             render: (text) => (
-                <span 
-                    style={{ color: 'blue', cursor: 'pointer' }} 
+                <span
+                    style={{ color: 'blue', cursor: 'pointer' }}
                     onClick={() => navigate('/Facultyinfo')}
                 >
                     {text}
@@ -50,10 +50,8 @@ export default function FacultyTable({ data }) {
     ];
 
     return (
-        <div className="mt-2">
-            <Card className="glass-card">
-                <AppTable columns={facultyColumn} dataSource={facultyItems} />
-            </Card>
-        </div>
+        // <div className="glass-container mt-2"> //Table design isn't fulled completed 
+            <AppTable columns={facultyColumn} dataSource={facultyItems} />
+        // </div>
     );
 }

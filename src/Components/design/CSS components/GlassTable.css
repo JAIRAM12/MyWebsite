@@ -8,7 +8,9 @@
 }
 
 .ant-table {
-  background: transparent !important;
+  /* background: transparent !important; */
+  background-color: #fff5;
+  box-shadow: 0 .4rem .8rem #0005;
 }
 
 .ant-table-thead > tr > th {
