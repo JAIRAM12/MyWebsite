@@ -1,0 +1,27 @@
+.box {
+  /* max-width: 600px; */
+  margin: 40px auto;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.animation {
+  text-align: center;
+}
+
+.pic img {
+  max-width: 200px;
+  border-radius: 50%;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: #007bff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+}
