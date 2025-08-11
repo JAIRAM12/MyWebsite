@@ -1,18 +1,22 @@
 .home-container {
-    background-image: url("/public/collageHome.jpg"); /* Place bg.jpg inside public/ */
-    background-size: cover; /* Makes it cover the full area */
+    background-image: url("/public/images/collageHome.jpg");
+    /* change to your image path */
+    background-size: cover;
+    /* Fill whole screen */
     background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh; /* Full height of viewport */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
+    /* Center image */
+    background-attachment: fixed;
+    /* Parallax-like effect */
+    min-height: 100vh;
+    /* Ensure full height */
+    width: 100%;
 }
 
-.content {
-    background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+.home-container .container {
+    background: rgba(255, 255, 255, 0.85);
+    /* Light overlay for readability */
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     padding: 20px;
-    border-radius: 12px;
 }
