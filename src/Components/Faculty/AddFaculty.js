@@ -4,8 +4,8 @@ import AppInput from "../design/AppInput";
 import AppNav from "../design/AppNav";
 import '../design/CSS components/AddFaculty.css'
 import AppButton from "../design/AppButton";
-import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
+import Api from "../design/API";
 
 export default function AddStaff() {
     const navigate = useNavigate();
@@ -27,12 +27,22 @@ export default function AddStaff() {
     });
 
     const onSubmit = (data) => {
-        console.log("Form Submitted:", data);
-        reset();
-        navigate('/faculty')
-        setFileNames({
-            image: "No file selected",
-        });
+        Api("POST", "http://localhost:8081/api/faculty", data)
+            .then((response) => {
+                const data = response.data
+                // Axios response is always successful here (status 2xx)
+                if (response.status === 200) {
+                    reset();
+                    navigate("/faculty");
+                    setFileNames({ image: "No file selected" });
+                    alert("Staff saved successfully!");
+                }
+            })
+            .catch((error) => {
+                // Axios throws for errors outside 2xx
+                console.error("❌ Error saving staff:", error);
+                alert("❌ Error saving staff");
+            });
     };
 
     return (
