@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../design/CSS components/FacultyInfo.css"
 import VanillaTilt from "vanilla-tilt";
 import AppNav from "../design/AppNav";
+import AppButton from "../design/AppButton";
 
 export default function FacultyInfo(props) {
     //   const { id } = useParams();
@@ -18,6 +19,7 @@ export default function FacultyInfo(props) {
     });
     const animationRef = useRef(null);
     const tiltRef = useRef(null);
+    const navigate = useNavigate();
 
     //   useEffect(() => {
     //     // Fetch staff data from your backend
@@ -90,32 +92,23 @@ export default function FacultyInfo(props) {
                         </div>
                         <br />
 
-                        <button className="btn btn-primary">
-                            <a
-                                href={`/verify/meenties/db image and doc/time table/${staff.timetable}`}
-                                style={{ color: "#fff", textDecoration: "none" }}
-                            >
-                                <strong>Working Time</strong>
-                            </a>
-                        </button>
+                        <AppButton type="primary" onClick={() => navigate('/AddMeenties') }>
+                            
+                                <strong>Add Meenties</strong>
+                            
+                        </AppButton>
 
-                        <button className="btn btn-primary" style={{ marginLeft: "10px" }}>
-                            <a
-                                href={`/verify/meenties/db image and doc/read more/${staff.readmore}`}
-                                style={{ color: "#fff", textDecoration: "none" }}
-                            >
+                        <AppButton type="primary" className="ms-3">
+                            
                                 <strong>Read More</strong>
-                            </a>
-                        </button>
+                            
+                        </AppButton>
 
-                        <button className="btn btn-primary" style={{ marginLeft: "10px" }}>
-                            <a
-                                href="/verify/verify_meenties.php"
-                                style={{ color: "#fff", textDecoration: "none" }}
-                            >
-                                <strong>Meenties</strong>
-                            </a>
-                        </button>
+                        <AppButton type="primary" className="ms-3">
+                            
+                                <strong>View Meenties</strong>
+                            
+                        </AppButton>
                     </div>
                 </div>
             </div>

@@ -2,10 +2,6 @@ import AppButton from '../design/AppButton';
 import AppNav from '../design/AppNav';
 import AppTable from '../design/AppTable';
 import '../design/CSS components/Home.css'
-// import React from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
-// import "./Home.css"; // optional custom styling
 
 export default function Home() {
   const placementColumns = [

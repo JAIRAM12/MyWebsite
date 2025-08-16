@@ -11,9 +11,10 @@ export default function AppNav() {
 
     const items = [
         { key: "/home", label: <Link to="/home">Home</Link> },
-        { key: "/about", label: <Link to="/about">About</Link> },
+        // { key: "/about", label: <Link to="/about">About</Link> },
         { key: "/faculty", label: <Link to="/faculty">Faculty</Link> },
-        { key: "/scoreboard", label: <Link to="/scoreboard">Scoreboard</Link> }
+        { key: "/scoreboard", label: <Link to="/scoreboard">Scoreboard</Link> },
+        { key: "/Report", label: <Link to="/Report">Report</Link> }
     ];
 
     return (
