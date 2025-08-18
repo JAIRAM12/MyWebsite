@@ -136,7 +136,7 @@ export default function ReportPage() {
 
   return (
     <div className="home-container">
-      <AppNav />
+      {/* <AppNav /> */}
       <div style={{ padding: 20, maxWidth: "90%", margin: "0 auto" }}>
         {/* === Top Stats === */}
         <Row gutter={16} style={{ marginBottom: 20 }}>

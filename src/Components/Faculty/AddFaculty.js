@@ -16,7 +16,7 @@ export default function AddStaff() {
             phone: "",
             department: "",
             education: "",
-            staffid: "",
+            staffId: "",
             pass: "",
             image: null,
         }
@@ -27,7 +27,7 @@ export default function AddStaff() {
     });
 
     const onSubmit = (data) => {
-        Api("POST", "http://localhost:8081/api/faculty", data)
+        Api("POST", "/api/faculty", data)
             .then((response) => {
                 const data = response.data
                 // Axios response is always successful here (status 2xx)
@@ -47,7 +47,7 @@ export default function AddStaff() {
 
     return (
         <div className="home-container">
-            <AppNav />
+            {/* <AppNav /> */}
             <div className="container mt-2" style={{
                 backgroundColor: "rgba(255, 255, 255, 0.85)",
                 borderRadius: "8px",
@@ -142,14 +142,14 @@ export default function AddStaff() {
                         <div className="input-box">
                             <label>Staff ID:</label>
                             <Controller
-                                name="staffid"
+                                name="staffId"
                                 control={control}
                                 rules={{ required: "Staff ID is required" }}
                                 render={({ field }) => (
                                     <AppInput {...field} placeholder="Enter your ID" />
                                 )}
                             />
-                            {errors.staffid && <span className="error-msg">{errors.staffid.message}</span>}
+                            {errors.staffId && <span className="error-msg">{errors.staffId.message}</span>}
                         </div>
 
                         <div className="input-box">

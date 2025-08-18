@@ -26,8 +26,8 @@ export default function Faculty() {
 
     return (
         <>
-            <div className='home-container'>
-                <AppNav />
+            {/* <div className='home-container'> */}
+                {/* <AppNav /> */}
                 <div style={{ padding: 20 }} >
                     <div className="d-flex justify-content-end mb-5 me-5 mt-3">
                         <AppButton type="primary" onClick={() => navigate('/Addfaculty')}>
@@ -41,7 +41,7 @@ export default function Faculty() {
                         <FacultyTable data={data} />
                     </div>
                 </div>
-            </div>
+            {/* </div> */}
         </>
     );
 }

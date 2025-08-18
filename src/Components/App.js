@@ -1,39 +1,49 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "antd";
-// import AppNav from "./design/AppNav";
 import { Content } from "antd/es/layout/layout";
+
+import AppNav from "./design/AppNav";  // <-- Navbar
 import Home from "./Home/Home";
 import Faculty from "./Faculty/Faculty";
 import AddFaculty from "./Faculty/AddFaculty";
 import FacultyInfo from "./Faculty/FacultyInfo";
 import Scoreboard from "./ScoreBoard/ScoreBoard";
-import './design/CSS components/App.css'
-import AddMeenties from "./Meenties/AddMeenties";
-import Meenties from "./Meenties/Meenties";
-import Dashboard from "./ScoreBoard/ScoreBoard";
 import ReportPage from "./Report/Report";
-import ScoreBoard from "./ScoreBoard/ScoreBoard";
+import Meenties from "./Meenties/Meenties";
+
+import './design/CSS components/App.css';
 
 export default function App() {
+  // 🔹 Dark mode state
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  // 🔹 Apply dark/light theme to body
+  useEffect(() => {
+    document.body.className = darkMode ? "dark" : "light";
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
   return (
     <Layout>
-      {/* <AppNav /> */}
-      {/* <Content style={{ padding: 20 }} > */}
+      {/* Navbar with toggle button */}
+      <AppNav darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
+
+      {/* Main content area */}
+      <Content>
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<Home />} />
-          {/* <Route path="/about" element={<About />} /> */}
+          <Route path="/home" element={<Home mode={darkMode} />} />
           <Route path="/faculty" element={<Faculty />} />
-          {/* <Route path="/scoreboard" element={<Dashboard />} /> */}
-          <Route path="/scoreboard" element={<ScoreBoard />} />
+          <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/Addfaculty" element={<AddFaculty />} />
           <Route path="/Facultyinfo" element={<FacultyInfo />} />
           <Route path="/AddMeenties" element={<Meenties />} />
           <Route path="/Report" element={<ReportPage />} />
-          {/* <Route path="/Facultyinfo" element={<FacultyInfo />} /> */}
         </Routes>
-      {/* </Content> */}
+      </Content>
     </Layout>
   );
 }

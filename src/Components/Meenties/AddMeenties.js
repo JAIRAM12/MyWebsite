@@ -18,7 +18,7 @@ export default function AddMeenties() {
     return (
         <>
         <div className="home-container">
-            <AppNav />
+            {/* <AppNav /> */}
                         <Card title="Add Student" className="glass-card">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">

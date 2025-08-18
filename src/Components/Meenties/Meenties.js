@@ -179,7 +179,7 @@ export default function Meenties() {
 
     return (
         <div className="home-container">
-            <AppNav />
+            {/* <AppNav /> */}
             <div style={{ padding: 20 }}>
                 <div
                     className="content"

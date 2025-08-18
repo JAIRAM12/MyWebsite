@@ -7,7 +7,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; // Font Awesome icons
 import 'antd/dist/reset.css'; // Ant Design styles (reset in AntD v5+)
 import { BrowserRouter } from 'react-router-dom';
 
-
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <App />

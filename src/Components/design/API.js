@@ -1,21 +1,25 @@
 import axios from "axios";
 
 const Api = async (method, path, payload = null) => {
+    // Read the correct env variable
+    const DAOServiceURL = process.env.REACT_APP_API_URL;
+    console.log("API Base URL:", DAOServiceURL);
+
     try {
         const headers = { "Content-Type": "application/json" };
 
         const options = {
             method,
-            url: path, // e.g. "http://localhost:8080/api/staff"
-            headers,
-            data: payload,
+            url: DAOServiceURL + path,
+            headers: { "Content-Type": "application/json" },
+            data: payload, // convert object to URL encoded
         };
-
+        console.log(options)
         const response = await axios(options);
-        return response // return parsed response
+        return response;
     } catch (error) {
         console.error("❌ API Error:", error);
-        throw error; // rethrow for handling
+        throw error;
     }
 };
 

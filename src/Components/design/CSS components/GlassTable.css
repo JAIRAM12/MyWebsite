@@ -1,4 +1,4 @@
-.glass-container {
+/* .glass-container {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -8,19 +8,19 @@
 }
 
 .ant-table {
-  /* background: transparent !important; */
+  /* background: transparent !important; *
   background-color: #fff5;
   box-shadow: 0 .4rem .8rem #0005;
 }
 
 .ant-table-thead > tr > th {
   /* background: rgba(255, 255, 255, 0.25) !important; */
-  /* color: white; */
+  /* color: white; *
 }
 
 
 
 .ant-table-tbody > tr > td {
   background: rgba(255, 255, 255, 0.15) !important;
-  /* color: white; */
-}
+  /* color: white; *
+} */

@@ -1,5 +1,124 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth transition */
+.custom-header {
+  padding: 0 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Navbar light/dark */
+.custom-header-light {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.custom-header-dark {
+  background-color: dark !important;
+  color: #fff !important;
+}
+
+
+.custom-menu-light .ant-menu-item-selected {
+  background-color: #f0f0f0 !important;
+  /* color: #1890ff !important; AntD blue */
+}
+
+
+/* App background */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark {
+  /* background-color: #121212; */
+  background-color: #001529;
+  color: #ffffff;
+}
+
+
+/* ------------------ */
+/* Menu Text Styling */
+/* ------------------ */
+
+/* Top-level menu + submenu */
+body.light .ant-menu .ant-menu-item,
+body.light .ant-menu .ant-menu-submenu-title {
+  color: #000 !important;
+}
+
+body.dark .ant-menu .ant-menu-item,
+body.dark .ant-menu .ant-menu-submenu-title {
+  color: #fff !important;
+}
+
+/* Links inside menu */
+body.light .ant-menu .ant-menu-item a,
+body.light .ant-menu .ant-menu-submenu-title a {
+  color: #000 !important;
+  text-decoration: none;
+}
+
+body.dark .ant-menu .ant-menu-item a,
+body.dark .ant-menu .ant-menu-submenu-title a {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+/* Hover states */
+body.dark .ant-menu .ant-menu-item:hover,
+body.dark .ant-menu .ant-menu-submenu-title:hover {
+  background: #001529 !important;
+  /* color: #40a9ff !important; */
+}
+
+/* Selected item */
+body.light .ant-menu .ant-menu-item-selected a {
+  font-weight: bold;
+  /* color: #1890ff !important; */
+}
+
+body.dark .ant-menu .ant-menu-item-selected a {
+  font-weight: bold;
+  color: white !important;
+}
+
+/* ------------------ */
+/* Remove AntD underline effect */
+/* ------------------ */
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after {
+  border-bottom: none !important;
+  content: none !important;
+}
+
+/* Also remove on hover */
+.ant-menu-horizontal > .ant-menu-item:hover::after,
+.ant-menu-horizontal > .ant-menu-submenu:hover::after {
+  border-bottom: none !important;
+  content: none !important;
+}
+/* Kill the AntD underline completely */
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after {
+  border-bottom: none !important;
+  content: none !important;
+}
+
+/* Also for hover + selected states */
+.ant-menu-horizontal > .ant-menu-item:hover::after,
+.ant-menu-horizontal > .ant-menu-item-selected::after,
+.ant-menu-horizontal > .ant-menu-submenu:hover::after,
+.ant-menu-horizontal > .ant-menu-submenu-selected::after {
+  border-bottom: none !important;
+  content: none !important;
+}
+
+.home-image {
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 10px;
 }

@@ -42,7 +42,7 @@ export default function FacultyInfo(props) {
 
     return (
         <div className="home-container">
-            <AppNav />
+            {/* <AppNav /> */}
 
             <div
                 style={{
