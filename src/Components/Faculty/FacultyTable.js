@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function FacultyTable({ data }) {
-    const [facultyItems, setFacultyItems] = useState(data || []);
+    const [facultyItems, setFacultyItems] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(data)
         if (data) {
             setFacultyItems(data);
         }
@@ -16,7 +17,7 @@ export default function FacultyTable({ data }) {
     const facultyColumn = [
         {
             title: 'Faculty ID',
-            dataIndex: 'facultyid',
+            dataIndex: 'staffId',
             key: 'facultyid',
             render: (text) => (
                 <span
@@ -29,22 +30,22 @@ export default function FacultyTable({ data }) {
         },
         {
             title: 'Faculty Name',
-            dataIndex: 'facultyname',
+            dataIndex: 'name',
             key: 'facultyname',
         },
         {
             title: 'Faculty Department',
-            dataIndex: 'facultydepartment',
+            dataIndex: 'department',
             key: 'facultydepartment',
         },
         {
             title: 'Faculty Email',
-            dataIndex: 'facultyemail',
+            dataIndex: 'email',
             key: 'facultyemail',
         },
         {
             title: 'Faculty Age',
-            dataIndex: 'facultyage',
+            dataIndex: 'age',
             key: 'facultyage',
         }
     ];

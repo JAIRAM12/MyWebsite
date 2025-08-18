@@ -36,9 +36,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={<Home mode={darkMode} />} />
-          <Route path="/faculty" element={<Faculty />} />
+          <Route path="/faculty" element={<Faculty mode={darkMode} />} />
           <Route path="/scoreboard" element={<Scoreboard />} />
-          <Route path="/Addfaculty" element={<AddFaculty />} />
+          <Route path="/Addfaculty" element={<AddFaculty mode={darkMode} />} />
           <Route path="/Facultyinfo" element={<FacultyInfo />} />
           <Route path="/AddMeenties" element={<Meenties />} />
           <Route path="/Report" element={<ReportPage />} />

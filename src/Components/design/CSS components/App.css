@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.page{
+ min-Height: 90vh;
+display: "flex";
+flex-Direction: "column";
+}
+
 /* Smooth transition */
 .custom-header {
   padding: 0 20px;
@@ -121,4 +127,55 @@ body.dark .ant-menu .ant-menu-item-selected a {
   height: 90%;
   object-fit: cover;
   border-radius: 10px;
+}
+
+ .card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
+}
+
+.card-registration {
+  max-width: 1000px; /* optional: controls card width */
+  margin: auto;
+}
+
+.card-registration .card-body {
+  padding: 2rem; /* compact padding */
+}
+
+.card-registration .select-arrow {
+top: 13px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+.card-footer {
+  margin-top: auto;
+}
+
+.error-msg {
+  font-size: 0.85rem;
+  color: #d9534f; /* Bootstrap danger red */
+  /* margin-top: 2px; very small gap */
+  display: block; /* ensures it starts on a new line */
+}
+
+.card-registration.dark-mode {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+}
+
+.card-registration.light-mode {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.card-registration.dark-mode label,
+.card-registration.dark-mode h3,
+.card-registration.dark-mode span {
+  color: #ffffff !important;  /* force labels, headings, errors */
 }
