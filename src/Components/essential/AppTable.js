@@ -1,5 +1,5 @@
 import { Table } from 'antd';
-import './CSS components/GlassTable.css'
+// import './CSS components/GlassTable.css'
 
 export default function AppTable({ columns, dataSource,pagination, ...rest }) {
   return (

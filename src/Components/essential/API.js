@@ -14,7 +14,6 @@ const Api = async (method, path, payload = null) => {
             headers: { "Content-Type": "application/json" },
             data: payload, // convert object to URL encoded
         };
-        console.log(options)
         const response = await axios(options);
         return response;
     } catch (error) {

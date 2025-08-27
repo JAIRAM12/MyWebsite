@@ -1,10 +1,9 @@
-import AppNav from "../design/AppNav";
+
 import { useState } from "react";
 import MeentiesTable from "./MeentiesTable";
-import AppButton from "../design/AppButton";
-import AppInput from "../design/AppInput";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import AppButton from "../essential/AppButton";
 
 export default function Meenties() {
     const [data, setData] = useState([

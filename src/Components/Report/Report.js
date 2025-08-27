@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { Card, Row, Col } from "antd";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import AppTable from "../design/AppTable";
-import AppNav from "../design/AppNav";
-import AppButton from "../design/AppButton";
-import AppInput from "../design/AppInput";
+import AppTable from "../essential/AppTable";
+import AppInput from "../essential/AppInput";
+import AppButton from "../essential/AppButton";
 
 export default function ReportPage() {
   const [data, setData] = useState([
@@ -141,29 +140,29 @@ export default function ReportPage() {
         {/* === Top Stats === */}
         <Row gutter={16} style={{ marginBottom: 20 }}>
           <Col span={6}>
-            <Card title="Total Students" bordered={false}>
+            <AppCard title="Total Students" bordered={false}>
               {stats.totalStudents}
-            </Card>
+            </AppCard>
           </Col>
           <Col span={6}>
-            <Card title="Internship Uploaded" bordered={false}>
+            <AppCard title="Internship Uploaded" bordered={false}>
               {stats.internship}
-            </Card>
+            </AppCard>
           </Col>
           <Col span={6}>
-            <Card title="Workshops Uploaded" bordered={false}>
+            <AppCard title="Workshops Uploaded" bordered={false}>
               {stats.workshop}
-            </Card>
+            </AppCard>
           </Col>
           <Col span={6}>
-            <Card title="Sports Uploaded" bordered={false}>
+            <AppCard title="Sports Uploaded" bordered={false}>
               {stats.sports}
-            </Card>
+            </AppCard>
           </Col>
         </Row>
 
         {/* === Chart Section === */}
-        <Card title="Uploads Distribution" style={{ marginBottom: 20 }}>
+        <AppCard title="Uploads Distribution" style={{ marginBottom: 20 }}>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -186,12 +185,12 @@ export default function ReportPage() {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-        </Card>
+        </AppCard>
 
         {/* === Detailed Table === */}
-        <Card title="Student Details">
+        <AppCard title="Student Details">
           <AppTable dataSource={data} columns={columns} />
-        </Card>
+        </AppCard>
       </div>
     </div>
   );

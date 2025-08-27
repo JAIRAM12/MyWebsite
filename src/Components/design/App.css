@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.page{
- min-Height: 90vh;
-display: "flex";
-flex-Direction: "column";
+.page {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Smooth transition */
@@ -21,16 +21,13 @@ flex-Direction: "column";
 }
 
 .custom-header-dark {
-  background-color: dark !important;
+  background-color: #001529 !important; /* fixed */
   color: #fff !important;
 }
 
-
 .custom-menu-light .ant-menu-item-selected {
   background-color: #f0f0f0 !important;
-  /* color: #1890ff !important; AntD blue */
 }
-
 
 /* App background */
 body.light {
@@ -39,17 +36,13 @@ body.light {
 }
 
 body.dark {
-  /* background-color: #121212; */
   background-color: #001529;
   color: #ffffff;
 }
 
-
 /* ------------------ */
 /* Menu Text Styling */
 /* ------------------ */
-
-/* Top-level menu + submenu */
 body.light .ant-menu .ant-menu-item,
 body.light .ant-menu .ant-menu-submenu-title {
   color: #000 !important;
@@ -60,7 +53,6 @@ body.dark .ant-menu .ant-menu-submenu-title {
   color: #fff !important;
 }
 
-/* Links inside menu */
 body.light .ant-menu .ant-menu-item a,
 body.light .ant-menu .ant-menu-submenu-title a {
   color: #000 !important;
@@ -73,17 +65,14 @@ body.dark .ant-menu .ant-menu-submenu-title a {
   text-decoration: none;
 }
 
-/* Hover states */
 body.dark .ant-menu .ant-menu-item:hover,
 body.dark .ant-menu .ant-menu-submenu-title:hover {
   background: #001529 !important;
-  /* color: #40a9ff !important; */
 }
 
 /* Selected item */
 body.light .ant-menu .ant-menu-item-selected a {
   font-weight: bold;
-  /* color: #1890ff !important; */
 }
 
 body.dark .ant-menu .ant-menu-item-selected a {
@@ -95,25 +84,7 @@ body.dark .ant-menu .ant-menu-item-selected a {
 /* Remove AntD underline effect */
 /* ------------------ */
 .ant-menu-horizontal > .ant-menu-item::after,
-.ant-menu-horizontal > .ant-menu-submenu::after {
-  border-bottom: none !important;
-  content: none !important;
-}
-
-/* Also remove on hover */
-.ant-menu-horizontal > .ant-menu-item:hover::after,
-.ant-menu-horizontal > .ant-menu-submenu:hover::after {
-  border-bottom: none !important;
-  content: none !important;
-}
-/* Kill the AntD underline completely */
-.ant-menu-horizontal > .ant-menu-item::after,
-.ant-menu-horizontal > .ant-menu-submenu::after {
-  border-bottom: none !important;
-  content: none !important;
-}
-
-/* Also for hover + selected states */
+.ant-menu-horizontal > .ant-menu-submenu::after,
 .ant-menu-horizontal > .ant-menu-item:hover::after,
 .ant-menu-horizontal > .ant-menu-item-selected::after,
 .ant-menu-horizontal > .ant-menu-submenu:hover::after,
@@ -122,6 +93,7 @@ body.dark .ant-menu .ant-menu-item-selected a {
   content: none !important;
 }
 
+/* Misc */
 .home-image {
   width: 100%;
   height: 90%;
@@ -129,39 +101,39 @@ body.dark .ant-menu .ant-menu-item-selected a {
   border-radius: 10px;
 }
 
- .card-registration .select-input.form-control[readonly]:not([disabled]) {
-font-size: 1rem;
-line-height: 2.15;
-padding-left: .75em;
-padding-right: .75em;
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
 }
 
-.card-registration {
-  max-width: 1000px; /* optional: controls card width */
+/* .card-registration {
+  max-width: 1000px;
   margin: auto;
-}
+} */
 
 .card-registration .card-body {
-  padding: 2rem; /* compact padding */
+  padding: 2rem;
 }
 
 .card-registration .select-arrow {
-top: 13px;
+  top: 13px;
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
 }
+
 .card-footer {
   margin-top: auto;
 }
 
 .error-msg {
   font-size: 0.85rem;
-  color: #d9534f; /* Bootstrap danger red */
-  /* margin-top: 2px; very small gap */
-  display: block; /* ensures it starts on a new line */
+  color: #d9534f;
+  display: block;
 }
 
 .card-registration.dark-mode {
@@ -177,5 +149,5 @@ top: 13px;
 .card-registration.dark-mode label,
 .card-registration.dark-mode h3,
 .card-registration.dark-mode span {
-  color: #ffffff !important;  /* force labels, headings, errors */
+  color: #ffffff !important;
 }

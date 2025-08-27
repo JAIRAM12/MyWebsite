@@ -1,6 +1,5 @@
-import AppButton from '../design/AppButton';
-import AppNav from '../design/AppNav';
-import AppTable from '../design/AppTable';
+import AppButton from "../essential/AppButton";
+
 
 export default function Home({ mode }) {
   const placementColumns = [

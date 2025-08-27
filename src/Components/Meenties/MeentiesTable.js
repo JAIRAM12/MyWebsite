@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import AppTable from "../design/AppTable"
 import { useEffect, useState } from "react";
+import AppTable from "../essential/AppTable";
 
 // const studentColumns = [
 //     {

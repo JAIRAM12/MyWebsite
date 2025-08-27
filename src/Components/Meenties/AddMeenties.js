@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import AppInput from "../design/AppInput";
 import MeentiesTable from "./MeentiesTable";
-import AppButton from "../design/AppButton";
-import { Card } from "antd";
-import AppNav from "../design/AppNav";
+import AppInput from "../essential/AppInput";
+import AppButton from "../essential/AppButton";
+
 
 export default function AddMeenties() {
     const { control, handleSubmit, reset, formState: { errors } } = useForm();
@@ -19,7 +18,7 @@ export default function AddMeenties() {
         <>
         <div className="home-container">
             {/* <AppNav /> */}
-                        <Card title="Add Student" className="glass-card">
+                        <AppCard title="Add Student" className="glass-card">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
                         {/* Student ID */}
@@ -119,7 +118,7 @@ export default function AddMeenties() {
                         </div>
                     </div>
                 </form>
-            </Card>
+            </AppCard>
             <MeentiesTable data={facultyData} />
             </div>
         </>

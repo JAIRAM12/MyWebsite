@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import AppInput from "../design/AppInput";
-import AppNav from "../design/AppNav";
-import '../design/CSS components/AddFaculty.css'
-import AppButton from "../design/AppButton";
+import AppInput from "../essential/AppInput";
+import AppNav from "../essential/AppNav";
+// import '../design/CSS components/AddFaculty.css'
+import AppButton from "../essential/AppButton";
 import { useNavigate } from "react-router-dom";
-import Api from "../design/API";
+import Api from "../essential/API";
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload } from "antd";
 
@@ -20,7 +20,9 @@ export default function AddStaff({ mode }) {
             education: "",
             staffId: "",
             pass: "",
+            skills: "",
             image: null,
+            address: "",
         }
     });
 
@@ -54,7 +56,15 @@ export default function AddStaff({ mode }) {
     }
 
     const onSubmit = (data) => {
-        Api("POST", "/api/faculty", data)
+        const educationArray = data.education.split(',').map(item => item.trim());
+        const skillsArray = data.skills.split(',').map(item => item.trim());
+        const payload ={
+            ...data,
+            education: educationArray,
+            skills: skillsArray
+            
+        }
+        Api("POST", "/api/faculty", payload)
             .then((response) => {
                 const data = response.data
                 // Axios response is always successful here (status 2xx)
@@ -198,7 +208,7 @@ export default function AddStaff({ mode }) {
                                                         control={control}
                                                         rules={{ required: "Education is required" }}
                                                         render={({ field }) => (
-                                                            <AppInput {...field} id="form3Example1m"
+                                                            <AppInput {...field}  id="form3Example1m"
                                                                 className="form-control form-control-lg" placeholder="Enter the education" />
                                                         )}
                                                     />
@@ -247,32 +257,67 @@ export default function AddStaff({ mode }) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className="row">
+                                                    <div className="col-md-6 mb-4">
+                                                        <div data-mdb-input-init className="form-outline mb-4">
+                                                            {/* <input type="text" id="form3Example9" className="form-control form-control-lg" /> */}
+                                                            <label className="form-label fw-bold" htmlFor="form3Example9">Skills</label>
+                                                            <Controller
+                                                                name="skills"
+                                                                control={control}
+                                                                rules={{ required: "Skills ID is required" }}
+                                                                render={({ field }) => (
+                                                                    <AppInput {...field} id="form3Example1m" 
+                                                                        className="form-control form-control-lg" placeholder="Enter your Skills" />
+                                                                )}
+                                                            />
+                                                            {errors.staffId && <span classNameName="error-msg">{errors.staffId.message}</span>}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6 mb-4">
+                                                        <label className="form-label fw-bold">Upload Image</label>
+                                                        <div>
+                                                            <Controller
+                                                                name="image"
+                                                                control={control}
+                                                                rules={{ required: "Image is required" }}
+                                                                render={({ field }) => (
+                                                                    <Upload
+                                                                        beforeUpload={() => false} // prevent auto upload
+                                                                        accept=".jpg,.jpeg,.png"
+                                                                        maxCount={1} // allow only one file
+                                                                        onChange={(info) => {
+                                                                            const file = info.file.originFileObj;
+                                                                            field.onChange(file);
+                                                                            convertIntoBased64({ target: { files: [file] } }); // your base64 fn
+                                                                        }}
+                                                                    >
+                                                                        <AppButton className='p-4' icon={<UploadOutlined />}>Click to Upload</AppButton>
+                                                                    </Upload>
+                                                                )}
+                                                            /></div>
 
-                                                <div className="form-outline mb-3">
-                                                    <label className="form-label fw-bold">Upload Image</label>
-                                                    <div>
-                                                        <Controller
-                                                            name="image"
-                                                            control={control}
-                                                            rules={{ required: "Image is required" }}
-                                                            render={({ field }) => (
-                                                                <Upload
-                                                                    beforeUpload={() => false} // prevent auto upload
-                                                                    accept=".jpg,.jpeg,.png"
-                                                                    maxCount={1} // allow only one file
-                                                                    onChange={(info) => {
-                                                                        const file = info.file.originFileObj;
-                                                                        field.onChange(file);
-                                                                        convertIntoBased64({ target: { files: [file] } }); // your base64 fn
-                                                                    }}
-                                                                >
-                                                                    <AppButton icon={<UploadOutlined />}>Click to Upload</AppButton>
-                                                                </Upload>
-                                                            )}
-                                                        /></div>
-
-                                                    {errors.image && <span className="error-msg">{errors.image.message}</span>}
+                                                        {errors.image && <span className="error-msg">{errors.image.message}</span>}
+                                                    </div>
                                                 </div>
+                                                {/* <div className="row"> */}
+                                                    {/* <div className="col-md-6 mb-4"> */}
+                                                        <div data-mdb-input-init className="form-outline mb-4">
+                                                            {/* <input type="text" id="form3Example9" className="form-control form-control-lg" /> */}
+                                                            <label className="form-label fw-bold" htmlFor="form3Example9">Address</label>
+                                                            <Controller
+                                                                name="address"
+                                                                control={control}
+                                                                rules={{ required: "Address is required" }}
+                                                                render={({ field }) => (
+                                                                    <AppInput {...field} id="form3Example1m"
+                                                                        className="form-control form-control-lg" placeholder="Enter your Address" />
+                                                                )}
+                                                            />
+                                                            {errors.staffId && <span classNameName="error-msg">{errors.staffId.message}</span>}
+                                                        </div>
+                                                    {/* </div> */}
+                                                {/* </div> */}
 
 
 

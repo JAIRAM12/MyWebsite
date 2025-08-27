@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import AppButton from "../design/AppButton";
 import FacultyTable from "./FacultyTable";
 import Search from "./BasicSearchFaculty";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "antd";
+import Api from "../essential/API";
+import AppButton from "../essential/AppButton";
+import AppCard from "../essential/AppCard";
 
 export default function Faculty({mode}) {
     const navigate = useNavigate();
@@ -25,27 +27,40 @@ export default function Faculty({mode}) {
     //     }
     // ];
 
-    const setItem = (data) => {
-        setData(data)
-    }
 
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        Api("GET", "/api/faculty/all")
+            .then((response) => {
+                const data = response.data
+                if (response.status === 200) {
+                    setData(data)
+                }
+            }).catch((error) => {
+                console.error("❌ Error fetching staff:", error);
+                alert("❌ Error fetching staff");
+            });
+        }
 
     return (
         <>
             <div className="page" >
                 <div style={{ padding: 20 }}>
                     <div className="d-flex justify-content-end mb-3 me-5 mt-3" style={{ padding: 20 }} >
-                        <Search setItem={setItem} mode={mode} />
+                        <Search setItem={(data)=> setData(data)} mode={mode} />
                     </div>
                     <div className="content justify-content-center" style={{ width: "98%", padding: 19 }}>
-                        <Card>
+                        <AppCard>
                             <div className="d-flex justify-content-end mb-3">
                                 <AppButton type="primary" onClick={() => navigate('/Addfaculty')}>
                                     Add Faculty
                                 </AppButton>
                             </div>
                             <FacultyTable data={data} />
-                        </Card>
+                        </AppCard>
                     </div>
                 </div>
             </div>
