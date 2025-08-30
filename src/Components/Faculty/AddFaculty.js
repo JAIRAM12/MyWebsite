@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import AppInput from "../design/AppInput";
-import AppNav from "../design/AppNav";
-import '../design/CSS components/AddFaculty.css'
-import AppButton from "../design/AppButton";
+import AppInput from "../essential/AppInput";
+import AppNav from "../essential/AppNav";
+// import '../design/CSS components/AddFaculty.css'
+import AppButton from "../essential/AppButton";
 import { useNavigate } from "react-router-dom";
-import Api from "../design/API";
+import Api from "../essential/API";
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload } from "antd";
+import AppNotification from "../essential/AppNotification";
+import MessageType from "../essential/enums";
 
 export default function AddStaff({ mode }) {
     const navigate = useNavigate();
@@ -20,7 +22,10 @@ export default function AddStaff({ mode }) {
             education: "",
             staffId: "",
             pass: "",
+            skills: "",
             image: null,
+            address: "",
+            position: ""
         }
     });
 
@@ -28,8 +33,7 @@ export default function AddStaff({ mode }) {
         image: "No file selected",
     });
 
-    const convertIntoBased64 = async (file) => {
-        // const file = e.target.files[0];
+    const convertIntoBased64 = (file, field) => {
         if (!file) {
             field.onChange(null);
             setFileNames((prev) => ({
@@ -39,36 +43,41 @@ export default function AddStaff({ mode }) {
             return;
         }
 
-        // Convert file to Base64
         const reader = new FileReader();
         reader.onloadend = () => {
-            field.onChange(reader.result); // store base64 string
+            field.onChange(reader.result);
         };
         reader.readAsDataURL(file);
 
-        // Update displayed filename
         setFileNames((prev) => ({
             ...prev,
             image: file.name,
         }));
-    }
+    };
+
+
 
     const onSubmit = (data) => {
-        Api("POST", "/api/faculty", data)
+        const educationArray = data.education.split(',').map(item => item.trim());
+        const skillsArray = data.skills.split(',').map(item => item.trim());
+        const payload = {
+            ...data,
+            education: educationArray,
+            skills: skillsArray
+
+        }
+        Api("POST", "/api/faculty", payload)
             .then((response) => {
                 const data = response.data
-                // Axios response is always successful here (status 2xx)
                 if (response.status === 200) {
-                    reset();
                     navigate("/faculty");
+                    AppNotification(MessageType.SUCCESS, "Success", "Data Successfully Upload ")
+                    reset();
                     setFileNames({ image: "No file selected" });
-                    alert("Staff saved successfully!");
                 }
             })
             .catch((error) => {
-                // Axios throws for errors outside 2xx
-                console.error("❌ Error saving staff:", error);
-                alert("❌ Error saving staff");
+                AppNotification(MessageType.ERROR, "Error", error)
             });
     };
     return (
@@ -134,11 +143,10 @@ export default function AddStaff({ mode }) {
                                                                     }
                                                                 }}
                                                                 render={({ field }) => (
-                                                                    <AppInput {...field} type="email" id="form3Example1m"
+                                                                    <AppInput {...field} type="email" id="form3Example1m" status={errors.email ? "error" : ''}
                                                                         className="form-control form-control-lg" placeholder="Enter your email" />
                                                                 )}
                                                             />
-                                                            {/* {errors.email && <span classNameName="error-msg">{errors.email.message}</span>} */}
                                                             {errors.email && (
                                                                 <span className="error-msg">
                                                                     {errors.email.message}
@@ -154,7 +162,6 @@ export default function AddStaff({ mode }) {
                                                         <div data-mdb-input-init className="form-outline">
                                                             <label className="form-label fw-bold" htmlFor="form3Example1m1">Phone No</label>
 
-                                                            {/* <input type="text" id="form3Example1m1" className="form-control form-control-lg" /> */}
                                                             <Controller
                                                                 name="phone"
                                                                 control={control}
@@ -163,7 +170,7 @@ export default function AddStaff({ mode }) {
                                                                     minLength: { value: 10, message: "Must be at least 10 digits" }
                                                                 }}
                                                                 render={({ field }) => (
-                                                                    <AppInput {...field} type="number" id="form3Example1m"
+                                                                    <AppInput {...field} type="number" id="form3Example1m" status={errors.phone ? "error" : ''}
                                                                         className="form-control form-control-lg" placeholder="Enter your phone no" />
                                                                 )}
                                                             />
@@ -180,7 +187,7 @@ export default function AddStaff({ mode }) {
                                                                 control={control}
                                                                 rules={{ required: "Department is required" }}
                                                                 render={({ field }) => (
-                                                                    <AppInput {...field} id="form3Example1m"
+                                                                    <AppInput {...field} id="form3Example1m" status={errors.department ? "error" : ''}
                                                                         className="form-control form-control-lg" placeholder="Enter the Department" />
                                                                 )}
                                                             />
@@ -192,17 +199,16 @@ export default function AddStaff({ mode }) {
 
                                                 <div data-mdb-input-init className="form-outline mb-4">
                                                     <label className="form-label fw-bold" htmlFor="form3Example8">Education</label>
-                                                    {/* <input type="text" id="form3Example8" className="form-control form-control-lg" /> */}
                                                     <Controller
                                                         name="education"
                                                         control={control}
                                                         rules={{ required: "Education is required" }}
                                                         render={({ field }) => (
-                                                            <AppInput {...field} id="form3Example1m"
+                                                            <AppInput {...field} id="form3Example1m" status={errors.education ? "error" : ''}
                                                                 className="form-control form-control-lg" placeholder="Enter the education" />
                                                         )}
                                                     />
-                                                    {errors.education && <span classNameName="error-msg">{errors.education.message}</span>}
+                                                    {errors.education && <span className="error-msg">{errors.education.message}</span>}
 
 
                                                 </div>
@@ -210,24 +216,22 @@ export default function AddStaff({ mode }) {
                                                 <div className="row">
                                                     <div className="col-md-6 mb-4">
                                                         <div data-mdb-input-init className="form-outline mb-4">
-                                                            {/* <input type="text" id="form3Example9" className="form-control form-control-lg" /> */}
                                                             <label className="form-label fw-bold" htmlFor="form3Example9">Staff Id</label>
                                                             <Controller
                                                                 name="staffId"
                                                                 control={control}
                                                                 rules={{ required: "Staff ID is required" }}
                                                                 render={({ field }) => (
-                                                                    <AppInput {...field} id="form3Example1m"
+                                                                    <AppInput {...field} id="form3Example1m" status={errors.staffId ? "error" : ''}
                                                                         className="form-control form-control-lg" placeholder="Enter your ID" />
                                                                 )}
                                                             />
-                                                            {errors.staffId && <span classNameName="error-msg">{errors.staffId.message}</span>}
+                                                            {errors.staffId && <span className="error-msg">{errors.staffId.message}</span>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 mb-4">
 
                                                         <div data-mdb-input-init className="form-outline mb-4">
-                                                            {/* <input type="text" id="form3Example90" className="form-control form-control-lg" /> */}
                                                             <label className="form-label fw-bold" htmlFor="form3Example90">Password</label>
 
                                                             <Controller
@@ -238,40 +242,95 @@ export default function AddStaff({ mode }) {
                                                                     minLength: { value: 6, message: "Password must be at least 6 characters" }
                                                                 }}
                                                                 render={({ field }) => (
-                                                                    <AppInput {...field} type="password" id="form3Example1m"
+                                                                    <AppInput {...field} type="password" id="form3Example1m" status={errors.pass ? "error" : ''}
                                                                         className="form-control form-control-lg" placeholder="Enter the password" />
                                                                 )}
                                                             />
-                                                            {errors.pass && <span classNameName="error-msg">{errors.pass.message}</span>}
+                                                            {errors.pass && <span className="error-msg">{errors.pass.message}</span>}
 
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className="row">
+                                                    <div className="col-md-6 mb-4">
+                                                        <div data-mdb-input-init className="form-outline mb-4">
+                                                            <label className="form-label fw-bold" htmlFor="form3Example9">Skills</label>
+                                                            <Controller
+                                                                name="skills"
+                                                                control={control}
+                                                                rules={{ required: "Skills ID is required" }}
+                                                                render={({ field }) => (
+                                                                    <AppInput {...field} id="form3Example1m" status={errors.skills ? "error" : ''}
+                                                                        className="form-control form-control-lg" placeholder="Enter your Skills" />
+                                                                )}
+                                                            />
+                                                            {errors.skills && <span className="error-msg">{errors.skills.message}</span>}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6 mb-4">
+                                                        <label className="form-label fw-bold">Upload Image</label>
+                                                        <div>
+                                                            <Controller
+                                                                name="image"
+                                                                control={control}
+                                                                rules={{ required: "Image is required" }}
+                                                                render={({ field }) => (
+                                                                    <Upload
+                                                                        beforeUpload={() => false}
+                                                                        accept=".jpg,.jpeg,.png"
+                                                                        maxCount={1}
+                                                                        onChange={(info) => {
+                                                                            const file = info.fileList[0].originFileObj;
+                                                                            console.log(info, file)
+                                                                            convertIntoBased64(file, field); // ✅ pass field down
+                                                                        }}
+                                                                        status={errors.image ? "error" : ''}
+                                                                    >
+                                                                        <AppButton className="p-4" icon={<UploadOutlined />}>
+                                                                            Click to Upload
+                                                                        </AppButton>
+                                                                    </Upload>
+                                                                )}
+                                                            />
 
-                                                <div className="form-outline mb-3">
-                                                    <label className="form-label fw-bold">Upload Image</label>
-                                                    <div>
-                                                        <Controller
-                                                            name="image"
-                                                            control={control}
-                                                            rules={{ required: "Image is required" }}
-                                                            render={({ field }) => (
-                                                                <Upload
-                                                                    beforeUpload={() => false} // prevent auto upload
-                                                                    accept=".jpg,.jpeg,.png"
-                                                                    maxCount={1} // allow only one file
-                                                                    onChange={(info) => {
-                                                                        const file = info.file.originFileObj;
-                                                                        field.onChange(file);
-                                                                        convertIntoBased64({ target: { files: [file] } }); // your base64 fn
-                                                                    }}
-                                                                >
-                                                                    <AppButton icon={<UploadOutlined />}>Click to Upload</AppButton>
-                                                                </Upload>
-                                                            )}
-                                                        /></div>
+                                                        </div>
 
-                                                    {errors.image && <span className="error-msg">{errors.image.message}</span>}
+                                                        {errors.image && <span className="error-msg">{errors.image.message}</span>}
+
+
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-6 mb-4">
+                                                        <div data-mdb-input-init className="form-outline mb-4">
+                                                            <label className="form-label fw-bold" htmlFor="form3Example9">Address</label>
+                                                            <Controller
+                                                                name="address"
+                                                                control={control}
+                                                                rules={{ required: "Address is required" }}
+                                                                render={({ field }) => (
+                                                                    <AppInput {...field} id="form3Example1m" status={errors.address ? "error" : ''}
+                                                                        className="form-control form-control-lg" placeholder="Enter your Address" />
+                                                                )}
+                                                            />
+                                                            {errors.address && <span className="error-msg">{errors.address.message}</span>}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6 mb-4">
+                                                        <div data-mdb-input-init className="form-outline mb-4">
+                                                            <label className="form-label fw-bold" htmlFor="form3Example9">Position</label>
+                                                            <Controller
+                                                                name="position"
+                                                                control={control}
+                                                                rules={{ required: "Position is required" }}
+                                                                render={({ field }) => (
+                                                                    <AppInput {...field} id="form3Example1m" status={errors.position ? "error" : ''}
+                                                                        className="form-control form-control-lg" placeholder="Enter your Position" />
+                                                                )}
+                                                            />
+                                                            {errors.position && <span className="error-msg">{errors.position.message}</span>}
+                                                        </div>
+                                                    </div>
                                                 </div>
 
 

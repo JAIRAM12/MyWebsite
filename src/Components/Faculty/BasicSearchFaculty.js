@@ -1,14 +1,17 @@
 import { Card } from "antd";
-import AppInput from "../design/AppInput";
-import AppButton from "../design/AppButton";
-import { useState } from "react";
-import Api from "../design/API";
+import { useEffect, useState } from "react";
+import Api from "../essential/API";
+import AppInput from "../essential/AppInput";
+import AppButton from "../essential/AppButton";
+import AppCard from "../essential/AppCard";
+import MessageType from "../essential/enums";
+import AppNotification from "../essential/AppNotification";
 
 const field = {
     name: "",
-        department: "",
-        staffId: "",
-} 
+    department: "CSE",
+    staffId: "",
+}
 
 export default function Search(props) {
     const [searchItem, setSearchItem] = useState(field);
@@ -16,9 +19,7 @@ export default function Search(props) {
     const onChange = (field, value) => {
         setSearchItem((prev) => ({ ...prev, [field]: value }));
     }
-
-    console.log(searchItem)
-
+    
     const onSubmit = () => {
         const payload = JSON.stringify(searchItem)
         Api("POST", "/api/faculty/Faculties", payload)
@@ -28,16 +29,17 @@ export default function Search(props) {
                     props.setItem(data)
                 }
             }).catch((error) => {
-                console.error("❌ Error saving staff:", error);
-                alert("❌ Error saving staff");
+                AppNotification(MessageType.ERROR, "Error", error)
             });
     }
 
 
     return (
         <>
-            <Card style={{ width: "100%", margin: "0 auto", backgroundColor: props?.mode ? "#121212" : "#ffffff",
-        color: props?.mode ? "#ffffff" : "#000000", }}>
+            <AppCard style={{
+                width: "100%", margin: "0 auto", backgroundColor: props?.mode ? "#121212" : "#ffffff",
+                color: props?.mode ? "#ffffff" : "#000000",
+            }}>
                 <div className="row">
                     <div className="col-md-3">
                         <label>Faculty ID</label>
@@ -79,12 +81,12 @@ export default function Search(props) {
                         <AppButton type="primary" onClick={onSubmit}>
                             Search
                         </AppButton>
-                        <AppButton  className="ml-2" onClick={() => setSearchItem(field)}>
+                        <AppButton className="ml-2" onClick={() => setSearchItem(field)}>
                             Clear
                         </AppButton>
                     </div>
                 </div>
-            </Card>
+            </AppCard>
         </>
     );
 

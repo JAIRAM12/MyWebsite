@@ -10,12 +10,19 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
   const selectedKey = location.pathname === "/" ? "/home" : location.pathname;
 
+  // const items = [
+  //   { key: "/home", label: <Link to="/home">Home</Link> },
+  //   { key: "/faculty", label: <Link to="/faculty">Faculty</Link> },
+  //   { key: "/scoreboard", label: <Link to="/scoreboard">Scoreboard</Link> },
+  //   { key: "/Report", label: <Link to="/Report">Report</Link> }
+  // ];
+
   const items = [
-    { key: "/home", label: <Link to="/home">Home</Link> },
-    { key: "/faculty", label: <Link to="/faculty">Faculty</Link> },
-    { key: "/scoreboard", label: <Link to="/scoreboard">Scoreboard</Link> },
-    { key: "/Report", label: <Link to="/Report">Report</Link> }
-  ];
+    { key: 'Faculty', label: <Link to="/faculty">Faculty</Link> },
+    { key: 'Scoreboard', label: <Link to="/scoreboard">Scoreboard</Link> },
+    { key: 'Letter', label: <Link to="/Report">Report</Link> },
+    { key: 'Upload', label: <Link to="/upload">Upload</Link> }
+  ]
 
   return (
     <Header
@@ -39,19 +46,28 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
           selectedKeys={[selectedKey]}
           items={items}
           theme={darkMode ? "dark" : "light"}
-        //   overflowedIndicator={null}   // ❌ disables "..."
+          //   overflowedIndicator={null}   // ❌ disables "..."
           style={{ flex: 1, justifyContent: "flex-end" }}
           onClick={({ key }) => navigate(key)}
         />
 
         {/* Theme Toggle */}
-        <span
+        {/* <span
           onClick={toggleDarkMode}
           className="cursor-pointer p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
           style={{ marginLeft: "15px" }}
         >
           {darkMode ? <Sun className="w-6 h-6 text-yellow-500" /> : <Moon className="w-6 h-6 text-blue-400" />}
-        </span>
+        </span> */}
+        <div className="d-flex align-items-center mr-2">
+        <img
+          src="/images/logo.jpg"
+          alt="Website Logo"
+          className="ml-2 mr-2"
+          style={{ height: "50px", marginRight: "10px", borderRadius: "50%" }}
+        />
+        <span className="fw-bold">Jairam JS</span>
+      </div>
       </div>
     </Header>
   );

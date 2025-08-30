@@ -1,6 +1,5 @@
 import { Card, Row, Col, Progress, Table, Statistic } from "antd";
 import { UserOutlined, FileDoneOutlined, TrophyOutlined, BookOutlined } from "@ant-design/icons";
-import AppNav from "../design/AppNav";
 
 const data = [
   { key: "1", sno: 1, image: "/images/logo.jpg", name: "ABINAV", cse: "A", gender: "M", internship: "internship_cert.pdf", workshop: null, paper: "paper_presentation.pdf", sports: null },
@@ -27,45 +26,45 @@ export default function ScoreBoard() {
         {/* Stat Cards */}
         <Row gutter={16}>
           <Col span={6}>
-            <Card className="glass-container" bordered={false}>
+            <AppCard className="glass-container" bordered={false}>
               <Statistic title="Total Students" value={totalStudents} prefix={<UserOutlined />} />
-            </Card>
+            </AppCard>
           </Col>
           <Col span={6}>
-            <Card className="glass-container" bordered={false}>
+            <AppCard className="glass-container" bordered={false}>
               <Statistic title="Internship Uploaded" value={internshipCount} prefix={<FileDoneOutlined />} />
-            </Card>
+            </AppCard>
           </Col>
           <Col span={6}>
-            <Card className="glass-container" bordered={false}>
+            <AppCard className="glass-container" bordered={false}>
               <Statistic title="Workshop Uploaded" value={workshopCount} prefix={<BookOutlined />} />
-            </Card>
+            </AppCard>
           </Col>
           <Col span={6}>
-            <Card className="glass-container" bordered={false}>
+            <AppCard className="glass-container" bordered={false}>
               <Statistic title="Paper Uploaded" value={paperCount} prefix={<BookOutlined />} />
-            </Card>
+            </AppCard>
           </Col>
         </Row>
 
         {/* More stats */}
         <Row gutter={16} style={{ marginTop: 20 }}>
           <Col span={6}>
-            <Card className="glass-container" bordered={false}>
+            <AppCard className="glass-container" bordered={false}>
               <Statistic title="Sports Uploaded" value={sportsCount} prefix={<TrophyOutlined />} />
-            </Card>
+            </AppCard>
           </Col>
           <Col span={12}>
-            <Card title="Overall Upload Progress" className="glass-container">
+            <AppCard title="Overall Upload Progress" className="glass-container">
               <Progress percent={Math.round(uploadProgress)} status={uploadProgress < 50 ? "exception" : "active"} />
-            </Card>
+            </AppCard>
           </Col>
         </Row>
 
         {/* Recent Uploads */}
         <Row style={{ marginTop: 30 }}>
           <Col span={24}>
-            <Card title="Recent Uploads" className="glass-container">
+            <AppCard title="Recent Uploads" className="glass-container">
               <Table
                 dataSource={data.slice(-5)}
                 columns={[
@@ -78,7 +77,7 @@ export default function ScoreBoard() {
                 pagination={false}
                 rowKey="key"
               />
-            </Card>
+            </AppCard>
           </Col>
         </Row>
       </div>

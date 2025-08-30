@@ -1,6 +1,6 @@
 import { Input, InputNumber, Select } from "antd";
 
-export default function AppInput({ inputLabel, inputName, inputType, ...props }) {
+export default function AppInput({ inputLabel, inputName, inputType, style, ...props }) {
     const renderInput = () => {
         switch (inputType) {
             case "text":
@@ -17,8 +17,10 @@ export default function AppInput({ inputLabel, inputName, inputType, ...props })
     };
 
     return (
-        <div style={{ marginBottom: "1rem" }}>
-            {inputLabel && <label style={{ display: "block", marginBottom: "5px" }}>{inputLabel}</label>}
+        <div style={{ marginBottom: "1rem", ...style }}>
+            {inputLabel && (
+                <label style={{ display: "block", marginBottom: "5px" }}>{inputLabel}</label>
+            )}
             {renderInput()}
         </div>
     );
