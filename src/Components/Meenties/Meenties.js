@@ -4,6 +4,7 @@ import MeentiesTable from "./MeentiesTable";
 import { Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import AppButton from "../essential/AppButton";
+import AppCard from "../essential/AppCard";
 
 export default function Meenties() {
     const [data, setData] = useState([
@@ -53,7 +54,7 @@ export default function Meenties() {
     };
 
     // Handle Upload button click
-     const handleUpload = (record) => {
+    const handleUpload = (record) => {
         console.log("Uploading row:", record);
 
         alert(`Uploaded for ${record.name}`);
@@ -177,19 +178,24 @@ export default function Meenties() {
     ];
 
     return (
-        <div className="home-container">
-            {/* <AppNav /> */}
-            <div style={{ padding: 20 }}>
-                <div
-                    className="content"
-                    style={{
-                        maxWidth: "80%",
-                        margin: "0 auto",
-                    }}
-                >
-                    <MeentiesTable data={data} columns={columns} />
+        <>
+            <div className="page" >
+                <div style={{ padding: 20 }}>
+                    <div className="d-flex justify-content-end mb-3 me-5 mt-3" style={{ padding: 20 }} >
+                        <Search setItem={(data) => setData(data)} mode={mode} />
+                    </div>
+                    <div className="content justify-content-center" style={{ width: "98%", padding: 19 }}>
+                        <AppCard>
+                            <div className="d-flex justify-content-end mb-3">
+                                <AppButton type="primary" onClick={() => navigate('/AddMeenties')}>
+                                    Add Meenties
+                                </AppButton>
+                            </div>
+                            <MeentiesTable data={data} columns={columns} />
+                        </AppCard>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

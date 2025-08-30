@@ -6,26 +6,12 @@ import { Card } from "antd";
 import Api from "../essential/API";
 import AppButton from "../essential/AppButton";
 import AppCard from "../essential/AppCard";
+import MessageType from "../essential/enums";
+import AppNotification from "../essential/AppNotification";
 
 export default function Faculty({mode}) {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    // const data = [
-    //     {
-    //         facultyid: "VH123",
-    //         facultyname: "js",
-    //         facultyemail: "jsjairam01@gmail.com",
-    //         facultyage: "45",
-    //         facultydepartment: "CS"
-    //     },
-    //     {
-    //         facultyid: "VH145",
-    //         facultyname: "js",
-    //         facultyemail: "jsjairam01@gmail.com",
-    //         facultyage: "45",
-    //         facultydepartment: "CS"
-    //     }
-    // ];
 
 
     useEffect(() => {
@@ -40,8 +26,7 @@ export default function Faculty({mode}) {
                     setData(data)
                 }
             }).catch((error) => {
-                console.error("❌ Error fetching staff:", error);
-                alert("❌ Error fetching staff");
+                AppNotification(MessageType.ERROR, "Error", error)
             });
         }
 

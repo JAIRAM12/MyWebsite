@@ -11,6 +11,7 @@ import ReportPage from "./Report/Report";
 import Meenties from "./Meenties/Meenties";
 import './design/App.css';
 import AppNav from "./essential/AppNav";
+import AddMeenties from "./Meenties/AddMeenties";
 
 export default function App() {
   // 🔹 Dark mode state
@@ -38,7 +39,8 @@ export default function App() {
           <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/Addfaculty" element={<AddFaculty mode={darkMode} />} />
           <Route path="/Facultyinfo/:id" element={<FacultyInfo />} />
-          <Route path="/AddMeenties" element={<Meenties />} />
+          <Route path="/Meenties" element={<Meenties />} />
+          <Route path="/AddMeenties" element={<AddMeenties />} />
           <Route path="/Report" element={<ReportPage />} />
         </Routes>
       </Content>

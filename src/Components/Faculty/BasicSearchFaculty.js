@@ -4,6 +4,8 @@ import Api from "../essential/API";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
 import AppCard from "../essential/AppCard";
+import MessageType from "../essential/enums";
+import AppNotification from "../essential/AppNotification";
 
 const field = {
     name: "",
@@ -27,8 +29,7 @@ export default function Search(props) {
                     props.setItem(data)
                 }
             }).catch((error) => {
-                console.error("❌ Error saving staff:", error);
-                alert("❌ Error saving staff");
+                AppNotification(MessageType.ERROR, "Error", error)
             });
     }
 

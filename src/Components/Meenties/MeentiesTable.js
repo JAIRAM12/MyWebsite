@@ -2,57 +2,18 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AppTable from "../essential/AppTable";
 
-// const studentColumns = [
-//     {
-//         title: 'S.No',
-//         dataIndex: 'id',
-//         key: 'id',
-//     },
-//     {
-//         title: 'Name',
-//         dataIndex: 'name',
-//         key: 'name',
-//     },
-//     {
-//         title: 'Roll Number',
-//         dataIndex: 'rollNumber',
-//         key: 'rollNumber',
-//     },
-//     {
-//         title: 'Email',
-//         dataIndex: 'email',
-//         key: 'email',
-//     },
-//     {
-//         title: 'Department',
-//         dataIndex: 'department',
-//         key: 'department',
-//     },
-//     {
-//         title: 'Year',
-//         dataIndex: 'year',
-//         key: 'year',
-//     },
-//     {
-//         title: 'Phone',
-//         dataIndex: 'phone',
-//         key: 'phone',
-//     }
-// ];
-
-export default function MeentiesTable({ data, columns }) {
-    const [studentItems, setstudentItems] = useState(data || []);
-    const navigate = useNavigate();
-
+const StudentTable = ({ data, columns }) => {
+    const [studentItems, setStudentItems] = useState([]);
+    
     useEffect(() => {
         if (data) {
-            setstudentItems(data);
+            setStudentItems(data);
         }
     }, [data]);
 
-
     return (
-
         <AppTable columns={columns} dataSource={studentItems} />
     );
-}
+};
+
+export default StudentTable;
