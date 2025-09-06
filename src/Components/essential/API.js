@@ -1,18 +1,19 @@
 import axios from "axios";
+import store from "../Redux/store";
 
 const Api = async (method, path, payload = null) => {
-    // Read the correct env variable
+    const state = store.getState();
+    const { userId, userRole, token, isLogin } = state.token;
     const DAOServiceURL = process.env.REACT_APP_API_URL;
-    console.log("API Base URL:", DAOServiceURL);
-
     try {
-        const headers = { "Content-Type": "application/json" };
-
         const options = {
             method,
             url: DAOServiceURL + path,
-            headers: { "Content-Type": "application/json" },
-            data: payload, // convert object to URL encoded
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: state.token.isLogin ? "Basic " + token : null,
+            },
+            data: payload,
         };
         const response = await axios(options);
         return response;

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Api from "../../essential/API";
 import AppCard from "../../essential/AppCard";
 import StudentTable from "../../Meenties/MeentiesTable";
-import AppNotification from "../../essential/AppNotification";
-import MessageType from "../../essential/enums";
+import { AppNotification } from "../../essential/AppNotification";
+import { MessageType } from "../../essential/enums";
 
 
 const StudentInfo = ({ id }) => {

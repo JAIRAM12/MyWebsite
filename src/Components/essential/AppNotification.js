@@ -1,12 +1,21 @@
-import React from 'react';
-import { notification } from 'antd';
 
-const AppNotification = (type, title, description) => {
-    notification[type]({
-        message: title,
-        description: description,
-        placement: 'topRight',
-    });
+
+import { notification } from "antd";
+
+export const AppNotification = (type, title, description) => {
+    if (notification[type]) {
+        notification[type]({
+            message: title,
+            description,
+            placement: "topRight",
+        });
+    } else {
+        console.error(`Invalid notification type: ${type}`);
+        notification.open({
+            message: title,
+            description,
+            placement: "topRight",
+        });
+    }
 };
 
-export default AppNotification;

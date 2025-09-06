@@ -1,3 +1,5 @@
+import AppTabs from "../../essential/AppTabs";
+import AppTag from "../../essential/AppTag";
 
 const Detail = ({ data }) => {
     return (
@@ -21,8 +23,9 @@ const Detail = ({ data }) => {
                 </div>
                 <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                     <div class="p-2">{data.education?.map((data, idx) => {
-                        return <span key={idx} class="badge text-bg-primary mr-2">{data}</span>;
-                    })}</div>
+                            return <AppTag className="mr-2" key={idx}>{data}</AppTag>
+                    })}
+                    </div>
                 </div>
                 <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                     <div class="p-2">Address</div>
@@ -36,7 +39,7 @@ const Detail = ({ data }) => {
                 <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                     <div class="p-2">{data.skills
                         ?.map((data, idx) => {
-                            return <span class="badge text-bg-primary mr-2" key={idx}>{data}</span>
+                            return <AppTag className="mr-2" key={idx}>{data}</AppTag>
                         })}</div>
                 </div>
                 <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
