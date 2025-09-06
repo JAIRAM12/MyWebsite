@@ -4,12 +4,12 @@ import Api from "../essential/API";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
 import AppCard from "../essential/AppCard";
-import MessageType from "../essential/enums";
-import AppNotification from "../essential/AppNotification";
+import { Department, MessageType } from "../essential/enums";
+import { AppNotification } from "../essential/AppNotification";
 
 const field = {
     name: "",
-    department: "CSE",
+    department: "",
     staffId: "",
 }
 
@@ -19,20 +19,20 @@ export default function Search(props) {
     const onChange = (field, value) => {
         setSearchItem((prev) => ({ ...prev, [field]: value }));
     }
-    
+
     const onSubmit = () => {
         const payload = JSON.stringify(searchItem)
         Api("POST", "/api/faculty/Faculties", payload)
             .then((response) => {
-                const data = response.data
-                if (response.status === 200) {
-                    props.setItem(data)
+                const data = response.data;
+                if (data) {
+                    props.setItem(data);
                 }
-            }).catch((error) => {
-                AppNotification(MessageType.ERROR, "Error", error)
+            })
+            .catch((error) => {
+                AppNotification(MessageType.ERROR, "Error", error.message || "Something went wrong");
             });
     }
-
 
     return (
         <>
@@ -63,20 +63,13 @@ export default function Search(props) {
                         <label>Department</label>
                         <AppInput
                             inputType="select"
-                            options={[
-                                { value: "CS", label: "Computer Science" },
-                                { value: "Math", label: "Mathematics" },
-                                { value: "Physics", label: "Physics" },
-                                { value: "Chemistry", label: "Chemistry" },
-                            ]}
-                            value={searchItem.department}
+                            options={Department}
+                            value={searchItem.department || null}
                             placeholder="Select Department"
                             style={{ width: "100%" }}
                             onChange={(value) => onChange("department", value)}
                         />
                     </div>
-
-                    {/* Buttons */}
                     <div className="col-12 mt-3">
                         <AppButton type="primary" onClick={onSubmit}>
                             Search

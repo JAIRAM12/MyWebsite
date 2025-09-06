@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import AppInput from "../essential/AppInput";
-import AppNav from "../essential/AppNav";
-// import '../design/CSS components/AddFaculty.css'
 import AppButton from "../essential/AppButton";
 import { useNavigate } from "react-router-dom";
 import Api from "../essential/API";
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload } from "antd";
-import AppNotification from "../essential/AppNotification";
-import MessageType from "../essential/enums";
+import { AppNotification } from "../essential/AppNotification";
+import { MessageType } from "../essential/enums";
 
 export default function AddStaff({ mode }) {
     const navigate = useNavigate();
@@ -21,7 +19,7 @@ export default function AddStaff({ mode }) {
             department: "",
             education: "",
             staffId: "",
-            pass: "",
+            password: "",
             skills: "",
             image: null,
             address: "",
@@ -54,8 +52,6 @@ export default function AddStaff({ mode }) {
             image: file.name,
         }));
     };
-
-
 
     const onSubmit = (data) => {
         const educationArray = data.education.split(',').map(item => item.trim());
@@ -97,12 +93,11 @@ export default function AddStaff({ mode }) {
                                                 style={{
                                                     borderTopLeftRadius: ".25rem",
                                                     borderBottomLeftRadius: ".25rem",
-                                                    height: "100%", // use full height of card instead of fixed 90%
-                                                    objectFit: "cover" // prevent distortion
+                                                    height: "100%",
+                                                    objectFit: "cover"
                                                 }}
                                             />
                                         </div>
-
                                         <div className="col-xl-6">
                                             <div className="card-body p-md-5 text-black">
                                                 <h3 className="mb-5 text-uppercase">Faculty registration form</h3>
@@ -152,16 +147,13 @@ export default function AddStaff({ mode }) {
                                                                     {errors.email.message}
                                                                 </span>
                                                             )}
-
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div className="row">
                                                     <div className="col-md-6 mb-4">
                                                         <div data-mdb-input-init className="form-outline">
                                                             <label className="form-label fw-bold" htmlFor="form3Example1m1">Phone No</label>
-
                                                             <Controller
                                                                 name="phone"
                                                                 control={control}
@@ -175,13 +167,11 @@ export default function AddStaff({ mode }) {
                                                                 )}
                                                             />
                                                             {errors.phone && <span className="error-msg">{errors.phone.message}</span>}
-
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 mb-4">
                                                         <div data-mdb-input-init className="form-outline">
                                                             <label className="form-label fw-bold" htmlFor="form3Example1n1">Department</label>
-
                                                             <Controller
                                                                 name="department"
                                                                 control={control}
@@ -192,11 +182,9 @@ export default function AddStaff({ mode }) {
                                                                 )}
                                                             />
                                                             {errors.department && <span className="error-msg">{errors.department.message}</span>}
-
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div data-mdb-input-init className="form-outline mb-4">
                                                     <label className="form-label fw-bold" htmlFor="form3Example8">Education</label>
                                                     <Controller
@@ -209,10 +197,7 @@ export default function AddStaff({ mode }) {
                                                         )}
                                                     />
                                                     {errors.education && <span className="error-msg">{errors.education.message}</span>}
-
-
                                                 </div>
-
                                                 <div className="row">
                                                     <div className="col-md-6 mb-4">
                                                         <div data-mdb-input-init className="form-outline mb-4">
@@ -230,24 +215,21 @@ export default function AddStaff({ mode }) {
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 mb-4">
-
                                                         <div data-mdb-input-init className="form-outline mb-4">
                                                             <label className="form-label fw-bold" htmlFor="form3Example90">Password</label>
-
                                                             <Controller
-                                                                name="pass"
+                                                                name="password"
                                                                 control={control}
                                                                 rules={{
                                                                     required: "Password is required",
                                                                     minLength: { value: 6, message: "Password must be at least 6 characters" }
                                                                 }}
                                                                 render={({ field }) => (
-                                                                    <AppInput {...field} type="password" id="form3Example1m" status={errors.pass ? "error" : ''}
+                                                                    <AppInput {...field} type="password" id="form3Example1m" status={errors.password ? "error" : ''}
                                                                         className="form-control form-control-lg" placeholder="Enter the password" />
                                                                 )}
                                                             />
-                                                            {errors.pass && <span className="error-msg">{errors.pass.message}</span>}
-
+                                                            {errors.password && <span className="error-msg">{errors.password.message}</span>}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -281,8 +263,7 @@ export default function AddStaff({ mode }) {
                                                                         maxCount={1}
                                                                         onChange={(info) => {
                                                                             const file = info.fileList[0].originFileObj;
-                                                                            console.log(info, file)
-                                                                            convertIntoBased64(file, field); // ✅ pass field down
+                                                                            convertIntoBased64(file, field);
                                                                         }}
                                                                         status={errors.image ? "error" : ''}
                                                                     >
@@ -292,12 +273,8 @@ export default function AddStaff({ mode }) {
                                                                     </Upload>
                                                                 )}
                                                             />
-
                                                         </div>
-
                                                         {errors.image && <span className="error-msg">{errors.image.message}</span>}
-
-
                                                     </div>
                                                 </div>
                                                 <div className="row">
@@ -332,9 +309,6 @@ export default function AddStaff({ mode }) {
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
                                                 <div className="d-flex justify-content-end pt-3">
                                                     <AppButton type="primary" htmlType="submit" className="mt-2">
                                                         Save Faculty
@@ -351,9 +325,7 @@ export default function AddStaff({ mode }) {
                                                     >
                                                         Cancel
                                                     </AppButton>
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -365,5 +337,4 @@ export default function AddStaff({ mode }) {
             </section>
         </>
     );
-
 }
