@@ -10,32 +10,39 @@ import Achedamic from "./Achedamic";
 import AppSegment from "../essential/AppSegment";
 
 export default function Meenties() {
+    const [active, setActive] = useState('event')
 
-    const options =[{
-        key: '1',
-        label: 'Event',
-        children : <Event />
-    },{
-        key: '2',
-        label: 'Achedamic',
-        children : <Achedamic />
-    }]
+    const options = [
+        {
+            key: "1",
+            label: "Event",
+            value: "event",
+            component: <Event />,
+        },
+        {
+            key: "2",
+            label: "Academic",
+            value: "academic",
+            component: <Achedamic />,
+        },
+    ];
+
+    const handleChange = (value) => {
+        setActive(value)
+    }
 
     return (
         <>
             <div className="page" >
-                <div style={{ padding: 20 }}>
-                    {/* <div className="d-flex justify-content-end mb-3 me-5 mt-3" style={{ padding: 20 }} >
-                        <Search setItem={(data) => setData(data)} mode={mode} />
-                    </div> */}
-                    <div className="content justify-content-center" style={{ width: "98%", padding: 19 }}>
+                <div className="p-4">
+                    <div className="content justify-content-center w-98 p-4">
                         <AppCard>
-                            <div className="d-flex justify-content-end mb-3">
+                            {/* <div className="d-flex justify-content-end mb-3">
                                 <AppButton type="primary" onClick={() => navigate('/AddMeenties')}>
                                     Add Meenties
                                 </AppButton>
-                            </div>
-                            <AppSegment options={options} />
+                            </div> */}
+                            <AppSegment options={options} onChange={handleChange} value={active} />
                         </AppCard>
                     </div>
                 </div>

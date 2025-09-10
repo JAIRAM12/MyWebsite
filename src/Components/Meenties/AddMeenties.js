@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import MeentiesTable from "./MeentiesTable";
 import { DeleteOutlined } from "@ant-design/icons";
@@ -7,6 +7,8 @@ import AppButton from "../essential/AppButton";
 import AppCard from "../essential/AppCard";
 import { useLocation, useNavigate } from "react-router-dom";
 import Api from "../essential/API";
+import { Department, MessageType } from "../essential/enums";
+import { AppNotification } from "../essential/AppNotification";
 
 
 export default function AddMeenties() {
@@ -37,14 +39,18 @@ export default function AddMeenties() {
         setStudentsData(prev => prev.filter(student => student.studentid !== studentId));
     };
 
-    const Submit = () => {
+    const Submit = useCallback(async () => {
+        if (studentsData.length === 0) {
+            AppNotification(MessageType.INFO, "Info", "Upload Student data");
+            return;
+        }
         const finalData = studentsData.map((data) => {
             return {
                 ...data,
                 createdBy: staffId
             };
         });
-        Api("POST", "/api/student", finalData)
+        await Api("POST", "/api/student", finalData)
             .then((response) => {
                 const data = response.data
                 if (response.status === 200) {
@@ -56,7 +62,7 @@ export default function AddMeenties() {
             .catch((error) => {
                 AppNotification(MessageType.ERROR, "Error", error)
             });
-    }
+    }, [studentsData, staffId, reset, navigate, AppNotification]);
 
     const studentColumns = [
         {
@@ -101,8 +107,8 @@ export default function AddMeenties() {
     return (
         <>
             <div className="page" >
-                <div className="d-flex justify-content-end mb-3 me-5 mt-3" style={{ padding: 20 }} >
-                    <AppCard style={{ width: "100%", margin: "0 auto" }}>
+                <div className="d-flex justify-content-end mb-3 me-5 mt-3 p-4" >
+                    <AppCard className="w-full mx-auto">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="row">
                                 {/* Student ID */}
@@ -175,17 +181,12 @@ export default function AddMeenties() {
                                                 <AppInput
                                                     inputType="select"
                                                     {...field}
-                                                    options={[
-                                                        { value: "CSE", label: "Computer Science" },
-                                                        { value: "ECE", label: "ECE" },
-                                                        { value: "EEE", label: "EEE" },
-                                                        { value: "Mechanic", label: "Mechanic" }
-                                                    ]}
+                                                    options={Department}
                                                     placeholder="Select Department"
-                                                    style={{ width: "100%" }}
+                                                    className='w-full'
                                                     status={error ? "error" : ""}
                                                 />
-                                                {errors.studentdepartment && <p className="text-danger">{errors.studentdepartment.message}</p>}
+                                                {errors.department && <p className="text-danger">{errors.department.message}</p>}
                                             </>
                                         )}
                                     />
@@ -206,10 +207,10 @@ export default function AddMeenties() {
                                                         { value: "Female", label: "Female" },
                                                     ]}
                                                     placeholder="Select Gender"
-                                                    style={{ width: "100%" }}
+                                                    className='w-full'
                                                     status={error ? "error" : ""}
                                                 />
-                                                {errors.studentgender && <p className="text-danger">{errors.studentgender.message}</p>}
+                                                {errors.gender && <p className="text-danger">{errors.gender.message}</p>}
                                             </>
                                         )}
                                     />
@@ -223,7 +224,7 @@ export default function AddMeenties() {
                         </form>
                     </AppCard>
                 </div>
-                <div className="content justify-content-center" style={{ width: "98%", padding: 19 }}>
+                <div className="content justify-content-center w-98 p-4">
                     <AppCard>
                         <MeentiesTable data={studentsData} columns={studentColumns} />
                         <div className="d-flex justify-content-end mb-3">

@@ -1,5 +1,5 @@
 import { Card } from "antd";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import Api from "../essential/API";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
@@ -13,33 +13,30 @@ const field = {
     staffId: "",
 }
 
-export default function Search(props) {
+const Search = ({ mode, setItem }) => {
     const [searchItem, setSearchItem] = useState(field);
 
-    const onChange = (field, value) => {
+    const onChange = useCallback((field, value) => {
         setSearchItem((prev) => ({ ...prev, [field]: value }));
-    }
+    }, [])
 
-    const onSubmit = () => {
+    const onSubmit = useCallback(async () => {
         const payload = JSON.stringify(searchItem)
-        Api("POST", "/api/faculty/Faculties", payload)
+        await Api("POST", "/api/faculty/Faculties", payload)
             .then((response) => {
                 const data = response.data;
                 if (data) {
-                    props.setItem(data);
+                    setItem(data);
                 }
             })
             .catch((error) => {
                 AppNotification(MessageType.ERROR, "Error", error.message || "Something went wrong");
             });
-    }
+    }, [setItem, searchItem])
 
     return (
         <>
-            <AppCard style={{
-                width: "100%", margin: "0 auto", backgroundColor: props?.mode ? "#121212" : "#ffffff",
-                color: props?.mode ? "#ffffff" : "#000000",
-            }}>
+            <AppCard >
                 <div className="row">
                     <div className="col-md-3">
                         <label>Faculty ID</label>
@@ -66,7 +63,7 @@ export default function Search(props) {
                             options={Department}
                             value={searchItem.department || null}
                             placeholder="Select Department"
-                            style={{ width: "100%" }}
+                            className='w-100'
                             onChange={(value) => onChange("department", value)}
                         />
                     </div>
@@ -82,5 +79,6 @@ export default function Search(props) {
             </AppCard>
         </>
     );
-
 }
+
+export default memo(Search)

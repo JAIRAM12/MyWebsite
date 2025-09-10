@@ -1,4 +1,4 @@
-import AppTabs from "../../essential/AppTabs";
+import { memo } from "react";
 import AppTag from "../../essential/AppTag";
 
 const Detail = ({ data }) => {
@@ -65,4 +65,4 @@ const Detail = ({ data }) => {
     )
 }
 
-export default Detail;
+export default memo(Detail);

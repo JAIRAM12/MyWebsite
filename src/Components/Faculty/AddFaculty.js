@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
@@ -9,7 +9,7 @@ import { Upload } from "antd";
 import { AppNotification } from "../essential/AppNotification";
 import { MessageType } from "../essential/enums";
 
-export default function AddStaff({ mode }) {
+const AddStaff = ({ mode }) => {
     const navigate = useNavigate();
     const { control, handleSubmit, reset, formState: { errors } } = useForm({
         defaultValues: {
@@ -27,63 +27,46 @@ export default function AddStaff({ mode }) {
         }
     });
 
-    const [fileNames, setFileNames] = useState({
-        image: "No file selected",
-    });
-
-    const convertIntoBased64 = (file, field) => {
+    const convertIntoBased64 = useCallback((file, field) => {
         if (!file) {
             field.onChange(null);
-            setFileNames((prev) => ({
-                ...prev,
-                image: "No file selected",
-            }));
             return;
         }
-
         const reader = new FileReader();
-        reader.onloadend = () => {
-            field.onChange(reader.result);
-        };
+        reader.onloadend = () => field.onChange(reader.result);
         reader.readAsDataURL(file);
+    }, []);
 
-        setFileNames((prev) => ({
-            ...prev,
-            image: file.name,
-        }));
-    };
-
-    const onSubmit = (data) => {
+    const onSubmit = useCallback(async (data) => {
         const educationArray = data.education.split(',').map(item => item.trim());
         const skillsArray = data.skills.split(',').map(item => item.trim());
         const payload = {
             ...data,
             education: educationArray,
             skills: skillsArray
-
         }
-        Api("POST", "/api/faculty", payload)
+        await Api("POST", "/api/faculty", payload)
             .then((response) => {
                 const data = response.data
                 if (response.status === 200) {
                     navigate("/faculty");
                     AppNotification(MessageType.SUCCESS, "Success", "Data Successfully Upload ")
                     reset();
-                    setFileNames({ image: "No file selected" });
                 }
             })
             .catch((error) => {
                 AppNotification(MessageType.ERROR, "Error", error)
             });
-    };
+    }, [navigate, reset]);
+
     return (
         <>
-            <section className={`${mode ? "bg-dark" : "bg-light"} py-4`}>
+            <section className={`py-4`}>
                 <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                     <div className="container py-3">
                         <div className="row d-flex justify-content-center align-items-center">
                             <div className="col">
-                                <div className={`card card-registration my-4 ${mode ? "dark-mode" : "light-mode"}`}>
+                                <div className={`card card-registration my-4`}>
                                     <div className="row g-0">
                                         <div className="col-xl-6 d-none d-xl-block">
                                             <img
@@ -315,11 +298,6 @@ export default function AddStaff({ mode }) {
                                                     </AppButton>
                                                     <AppButton
                                                         type="default"
-                                                        style={{
-                                                            backgroundColor: mode ? "#121212" : "#ffffff", // dark / light background
-                                                            color: mode ? "#ffffff" : "#000000",           // text color
-                                                            borderColor: mode ? "#ffffff" : ""      // border color
-                                                        }}
                                                         onClick={() => { navigate('/faculty'); reset(); }}
                                                         className="mt-2 ms-2"
                                                     >
@@ -338,3 +316,5 @@ export default function AddStaff({ mode }) {
         </>
     );
 }
+
+export default memo(AddStaff)
