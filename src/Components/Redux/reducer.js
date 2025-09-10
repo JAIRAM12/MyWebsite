@@ -5,8 +5,7 @@ const initialState = {
     userRole: null,
     isLogin: false,
     token: null,
-    image: null,
-    userName: null
+    image: null
 };
 
 const tokenSlice = createSlice({
@@ -14,18 +13,18 @@ const tokenSlice = createSlice({
     initialState,
     reducers: {
         addToken: (state, action) => {
-            state.userId = action.payload.id;
-            state.userRole = action.payload.role;
-            state.userName = action.payload.name
-            state.isLogin = true;
-            state.image = action.payload.image ? action.payload.image : null;
+            console.log(action.payload)
+            state.userId = action.payload.user.id;
+            state.userRole = action.payload.user.role;
             state.token = action.payload.token;
+            state.isLogin = true;
+            state.image = action.payload.user.avatar ? action.payload.user.avatar : null;
         },
         clearToken: (state) => {
             state.userId = null;
             state.userRole = null;
             state.isLogin = false;
-            state.userName = null;
+            state.image = null;
             state.token = null;
         },
     },

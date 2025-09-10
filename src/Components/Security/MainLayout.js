@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import AppNav from "../essential/AppNav";
 
-export default function MainLayout({ children, darkMode, toggleDarkMode }) {
+const MainLayout = ({ children, darkMode, toggleDarkMode }) => {
   return (
     <Layout>
       <AppNav darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
@@ -11,3 +11,5 @@ export default function MainLayout({ children, darkMode, toggleDarkMode }) {
     </Layout>
   );
 }
+
+export default memo(MainLayout)

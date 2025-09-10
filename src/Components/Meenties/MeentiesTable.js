@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import AppTable from "../essential/AppTable";
 
 const StudentTable = ({ data, columns }) => {
@@ -16,4 +16,4 @@ const StudentTable = ({ data, columns }) => {
     );
 };
 
-export default StudentTable;
+export default memo(StudentTable);

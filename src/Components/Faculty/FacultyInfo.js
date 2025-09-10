@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, Children } from "react";
+import { useEffect, useState, useRef, Children, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AppButton from "../essential/AppButton";
 import Api from "../essential/API";
@@ -32,8 +32,8 @@ export default function FacultyInfo(props) {
         fetchData();
     }, []);
 
-    const fetchData = () => {
-        Api("POST", `/api/faculty/${id}`)
+    const fetchData = useCallback(async () => {
+        await Api("POST", `/api/faculty/${id}`)
             .then((response) => {
                 const data = response.data
                 if (response.status === 200) {
@@ -42,7 +42,7 @@ export default function FacultyInfo(props) {
             }).catch((error) => {
                 AppNotification(MessageType.ERROR, "Error", error)
             });
-    }
+    },[])
 
     const callback = (data) => {
         console.log(data)

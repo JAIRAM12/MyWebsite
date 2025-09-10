@@ -1,9 +1,11 @@
-import React, { Children } from "react";
 import { Layout, Menu } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Sun, Moon } from "lucide-react";
 import store from "../Redux/store";
 import AppImage from "./AppImage";
+import AppButton from "./AppButton";
+import {LoginOutlined} from '@ant-design/icons'; 
+import { useDispatch } from "react-redux";
+import { clearToken } from "../Redux/reducer";
 
 const { Header } = Layout;
 
@@ -12,6 +14,7 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
   const selectedKey = location.pathname === "/" ? "/home" : location.pathname;
   const state = store.getState();
+  const dispatch = useDispatch()
 
   const items = [
     { key: '/faculty', label: 'Faculty' },
@@ -26,7 +29,6 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
     },
     { key: '/upload', label: 'Upload' }
   ];
-
 
   return (
     <Header
@@ -52,22 +54,16 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
           style={{ flex: 1, justifyContent: "flex-end" }}
           onClick={({ key }) => navigate(key)}
         />
-
-        {/* Theme Toggle */}
-        {/* <span
-          onClick={toggleDarkMode}
-          className="cursor-pointer p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
-          style={{ marginLeft: "15px" }}
-        >
-          {darkMode ? <Sun className="w-6 h-6 text-yellow-500" /> : <Moon className="w-6 h-6 text-blue-400" />}
-        </span> */}
-        <div className="d-flex align-items-center mr-2" S>
+        <div className="d-flex align-items-center mr-2">
           <AppImage
             data={state.token.image}
             name={state.token.userName}
             style={{ height: "50px", borderRadius: "50%", width: "50px", objectFit: "cover" }}
           />
           <Link to={'/Facultyinfo/' + state.token.userId} className="fw-bold ml-2 text-decoration-none" >{state.token.userName}</Link>
+        </div>
+        <div className="d-flex align-items-center mr-2">
+          <AppButton type='primary' style={{ padding: '1px'}} icon={<LoginOutlined />} onClick={() => dispatch(clearToken())} />
         </div>
       </div>
     </Header>

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToken } from "../Redux/reducer";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
 import Api from "../essential/API";
+import { AppNotification } from "../essential/AppNotification";
+import { MessageType } from "../essential/enums";
 
-function Login() {
+const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -14,24 +16,20 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         setIsLoading(true);
         setError("");
         const payload = { username, password }
-        console.log(payload)
-        Api("POST", "/api/auth/login", payload)
+        await Api("POST", "/login", payload)
             .then((response) => {
                 if (response.status === 200) {
-                    dispatch(addToken({
-                        ...response.data,
-                        token: btoa(`${username}:${password}`) // optional extra field
-                    }));
+                    dispatch(addToken(response.data));
                     navigate("/faculty")
                 }
             })
             .catch((error) => {
-                AppNotification(MessageType.ERROR, "Error", error)
+                setIsLoading(false)
                 if (error.response?.status === 401) {
                     setError("Invalid username or password");
                 } else if (error.response?.status === 403) {
@@ -41,8 +39,9 @@ function Login() {
                 } else {
                     setError("Login failed. Please try again later.");
                 }
+                AppNotification(MessageType.ERROR, "Error", error);
             });
-    };
+    }, [setError, AppNotification, setIsLoading, navigate, username, password])
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -63,7 +62,7 @@ function Login() {
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                             placeholder="Enter your ID"
                             required
                             disabled={isLoading}
@@ -78,7 +77,7 @@ function Login() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                             placeholder="Enter your password"
                             required
                             disabled={isLoading}

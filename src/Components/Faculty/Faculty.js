@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import FacultyTable from "./FacultyTable";
 import Search from "./BasicSearchFaculty";
-import { useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Api from "../essential/API";
 import AppButton from "../essential/AppButton";
 import AppCard from "../essential/AppCard";
@@ -16,8 +16,8 @@ export default function Faculty({ mode }) {
         fetchData();
     }, []);
 
-    const fetchData = () => {
-        Api("GET", "/api/faculty/all")
+    const fetchData = useCallback(async () => {
+        await Api("GET", "/api/faculty/all")
             .then((response) => {
                 const data = response.data
                 if (response.status === 200) {
@@ -26,16 +26,16 @@ export default function Faculty({ mode }) {
             }).catch((error) => {
                 AppNotification(MessageType.ERROR, "Error", error)
             });
-    }
+    },[])
 
     return (
         <>
             <div className="page" >
-                <div style={{ padding: 20 }}>
-                    <div className="d-flex justify-content-end mb-3 me-5 mt-3" style={{ padding: 20 }} >
+                <div className="p-4">
+                    <div className="mb-3 mt-3 mr-5 p-4">
                         <Search setItem={(data) => setData(data)} mode={mode} />
                     </div>
-                    <div className="content justify-content-center" style={{ width: "98%", padding: 19 }}>
+                    <div className="content justify-content-center p-4 w-98">
                         <AppCard>
                             {/* <div className="d-flex justify-content-end mb-3">
                                 <AppButton type="primary" onClick={() => navigate('/Addfaculty')}>
