@@ -1,34 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
-    userId: null,
-    userRole: null,
-    isLogin: false,
-    token: null,
-    image: null
+  token: null,
+  isLogin: false,
+  expiryDate: null,
+  userInfo: {},
 };
 
-const tokenSlice = createSlice({
-    name: "token",
-    initialState,
-    reducers: {
-        addToken: (state, action) => {
-            console.log(action.payload)
-            state.userId = action.payload.user.id;
-            state.userRole = action.payload.user.role;
-            state.token = action.payload.token;
-            state.isLogin = true;
-            state.image = action.payload.user.avatar ? action.payload.user.avatar : null;
-        },
-        clearToken: (state) => {
-            state.userId = null;
-            state.userRole = null;
-            state.isLogin = false;
-            state.image = null;
-            state.token = null;
-        },
+const tokenReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'SET_TOKEN':
+      return {
+        token: action.payload.token,
+        isLogin: true,
+      };
+    case "SET_USER_INFO":
+  return {
+    ...state,
+    expiryDate: action.payload.expiryDate,
+    userInfo: {
+      ...action.payload.user,
     },
-});
+  };
+    case 'CLEAR_TOKEN':
+      return {
+        ...initialState,
+      };
+    default:
+      return state;
+  }
+};
 
-export const { addToken, clearToken } = tokenSlice.actions;
-export default tokenSlice.reducer;
+export default tokenReducer;

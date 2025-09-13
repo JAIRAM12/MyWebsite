@@ -20,11 +20,13 @@ export const AppNotification = (type, title, description, options = {}) => {
         onClick,
     };
 
-    console.log("Notification:", type, title);
-
-    if (notification[type]) {
-        notification[type](notificationConfig);
-    } else {
-        notification.open(notificationConfig);
+    try {
+        if (notification[type]) {
+            notification[type](notificationConfig);
+        } else {
+            notification.error(notificationConfig);
+        }
+    } catch (error) {
+        console.error(error)
     }
 };

@@ -1,37 +1,42 @@
 import axios from "axios";
 import store from "../Redux/store";
-import { clearToken } from "../Redux/reducer";
+import { MessageType } from "./enums";
+import { AppNotification } from "./AppNotification";
 
 const Api = async (method, path, payload = null) => {
-    const state = store.getState().token;
-    const { token, isLogin, expiresAt } = state;
-    const DAOServiceURL = process.env.REACT_APP_API_URL;
+  const state = store.getState().token;
+  const { token = null, isLogin, expiryDate } = state;
+  const DAOServiceURL = process.env.REACT_APP_API_URL;
 
-    // ✅ check expiry
-    if (isLogin && expiresAt && Date.now() > expiresAt) {
-        console.warn("⚠️ Token expired, logging out...");
-        store.dispatch(clearToken());
-        window.location.href = "/login"; // redirect
-        throw new Error("Token expired");
-    }
+  // ✅ check expiry
+  if (isLogin && expiryDate && Date.now() > expiryDate) {
+    console.warn("⚠️ Token expired, logging out...");
+    store.dispatch(clearToken());
+    localStorage.removeItem("token"); // also clear localStorage
+    window.location.href = "/"; // fallback redirect
+    AppNotification(MessageType.ERROR, "Error", "Token expired");
+  }
 
-    try {
-        const options = {
-            method,
-            url: DAOServiceURL + path,
-            headers: {
-                "Content-Type": "application/json",
-                ...(isLogin && token ? { Authorization: `Bearer ${token}` } : {}), // ✅ only attach if valid
-            },
-            data: payload,
-        };
+  try {
+    const authToken = token ?? localStorage.getItem("token"); // ✅ always sync with Redux + storage
 
-        const response = await axios(options);
-        return response;
-    } catch (error) {
-        console.error("❌ API Error:", error);
-        throw error;
-    }
+    const options = {
+      method,
+      url: `${DAOServiceURL}${path}`,
+      headers: {
+        "Content-Type": "application/json",
+        ...(isLogin && authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+      },
+      data: payload,
+    };
+    
+    const response = await axios(options);
+    return response;
+  } catch (error) {
+    console.error("❌ API Error:", error);
+    AppNotification(MessageType.ERROR, "Error", "❌ API Error");
+    return error;
+  }
 };
 
 export default Api;

@@ -3,10 +3,10 @@ import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import AppNav from "../essential/AppNav";
 
-const MainLayout = ({ children, darkMode, toggleDarkMode }) => {
+const MainLayout = ({ children }) => {
   return (
     <Layout>
-      <AppNav darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <AppNav />
       <Content>{children}</Content>
     </Layout>
   );

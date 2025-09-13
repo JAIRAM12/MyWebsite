@@ -5,7 +5,8 @@ import AppImage from "./AppImage";
 import AppButton from "./AppButton";
 import {LoginOutlined} from '@ant-design/icons'; 
 import { useDispatch } from "react-redux";
-import { clearToken } from "../Redux/reducer";
+import { clearToken } from "../Redux/Action";
+// import { clearToken } from "../Redux/reducer";
 
 const { Header } = Layout;
 
@@ -32,11 +33,11 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
 
   return (
     <Header
-      className={`d-flex align-items-center ${darkMode ? "custom-header-dark" : "custom-header-light"}`}
-      style={{ height: "80px", lineHeight: "80px", padding: "0 20px" }}
+      className={`d-flex align-items-center  bg-white text-black dark:bg-gray-800 dark:text-white`}
+      style={{ height: "80px", lineHeight: "80px", padding: "0 20px"}}
     >
       {/* Logo + Site Name */}
-      <div className="d-flex align-items-center mr-2" S>
+      <div className="d-flex align-items-center mr-2">
         <AppImage
           name="Website logo"
           style={{ height: "50px", borderRadius: "50%", objectFit: "cover" }}
@@ -50,7 +51,7 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
           mode="horizontal"
           selectedKeys={[selectedKey]}
           items={items}
-          theme={darkMode ? "dark" : "light"}
+          // theme={"light"}
           style={{ flex: 1, justifyContent: "flex-end" }}
           onClick={({ key }) => navigate(key)}
         />
@@ -62,7 +63,7 @@ export default function AppNav({ darkMode, toggleDarkMode }) {
           />
           <Link to={'/Facultyinfo/' + state.token.userId} className="fw-bold ml-2 text-decoration-none" >{state.token.userName}</Link>
         </div>
-        <div className="d-flex align-items-center mr-2">
+        <div className="d-flex align-items-center mr-2" >
           <AppButton type='primary' style={{ padding: '1px'}} icon={<LoginOutlined />} onClick={() => dispatch(clearToken())} />
         </div>
       </div>
