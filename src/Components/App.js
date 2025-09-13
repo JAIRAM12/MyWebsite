@@ -15,18 +15,26 @@ import Login from "./Security/login";
 import MainLayout from "./Security/MainLayout";
 import AuthLayout from "./Security/AuthLayout";
 import ProtectedRoute from "./Security/ProtectedRoute";
+import { useDispatch, useSelector } from "react-redux";
+import getUserInfo from "./essential/enums/getUserInfo";
+import { addToken } from "./Redux/Action";
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
+  const dispatch = useDispatch();
+  const { token, isLogin } = useSelector((state) => state.token);
 
   useEffect(() => {
-    document.body.className = darkMode ? "dark" : "light";
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
+    if (!token && !isLogin) {
+      const localToken = localStorage.getItem("token")
+      dispatch(addToken(localToken))
+      getUserInfo(localToken)
+    } else {
+      getUserInfo(token)
+    }
+  }, [dispatch, token, isLogin])
+  
 
-return (
+  return (
     <Routes>
       {/* Public route → Login */}
       <Route
@@ -43,8 +51,8 @@ return (
         path="/Addfaculty"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
-              <AddFaculty mode={darkMode} />
+            <MainLayout  >
+              <AddFaculty />
             </MainLayout>
           </ProtectedRoute>
         }
@@ -54,8 +62,8 @@ return (
         path="/faculty"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
-              <Faculty mode={darkMode} />
+            <MainLayout  >
+              <Faculty />
             </MainLayout>
           </ProtectedRoute>
         }
@@ -65,7 +73,7 @@ return (
         path="/scoreboard"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
+            <MainLayout  >
               <Scoreboard />
             </MainLayout>
           </ProtectedRoute>
@@ -76,7 +84,7 @@ return (
         path="/Facultyinfo/:id"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
+            <MainLayout  >
               <FacultyInfo />
             </MainLayout>
           </ProtectedRoute>
@@ -87,7 +95,7 @@ return (
         path="/Meenties"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
+            <MainLayout  >
               <Meenties />
             </MainLayout>
           </ProtectedRoute>
@@ -98,7 +106,7 @@ return (
         path="/AddMeenties"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
+            <MainLayout  >
               <AddMeenties />
             </MainLayout>
           </ProtectedRoute>
@@ -109,7 +117,7 @@ return (
         path="/Report"
         element={
           <ProtectedRoute>
-            <MainLayout darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)}>
+            <MainLayout  >
               <ReportPage />
             </MainLayout>
           </ProtectedRoute>

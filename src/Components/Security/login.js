@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToken } from "../Redux/reducer";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
 import Api from "../essential/API";
 import { AppNotification } from "../essential/AppNotification";
 import { MessageType } from "../essential/enums";
+import { addToken } from "../Redux/Action";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -24,7 +24,11 @@ const Login = () => {
         await Api("POST", "/login", payload)
             .then((response) => {
                 if (response.status === 200) {
-                    dispatch(addToken(response.data));
+                    const { token } = response.data
+                    dispatch((addToken(token)));
+                    setIsLoading(false)
+                    localStorage.setItem("token", token);
+                    AppNotification(MessageType.SUCCESS, "Success", "Success")
                     navigate("/faculty")
                 }
             })
