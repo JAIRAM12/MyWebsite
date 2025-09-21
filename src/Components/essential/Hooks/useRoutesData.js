@@ -16,14 +16,13 @@ export function useRoutesData() {
                 console.error("Failed to fetch routes:", error);
             }
         };
-        if (userInfo){
-        fetchRoutes();
+        if (userInfo) {
+            fetchRoutes();
         } else {
-            AppNotification("error", "Error", "User info not available.");
             setRoutesData([]);
             <Navigate to="/" replace />
         }
-        
+
     }, [userInfo]);
 
     return routesData;
