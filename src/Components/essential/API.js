@@ -2,6 +2,7 @@ import axios from "axios";
 import store from "../Redux/store";
 import { MessageType } from "./enums";
 import { AppNotification } from "./AppNotification";
+import { clearToken } from "../Redux/Action";
 
 const Api = async (method, path, payload = null) => {
   const state = store.getState().token;
@@ -34,7 +35,6 @@ const Api = async (method, path, payload = null) => {
     return response;
   } catch (error) {
     console.error("❌ API Error:", error);
-    AppNotification(MessageType.ERROR, "Error", "❌ API Error");
     return error;
   }
 };

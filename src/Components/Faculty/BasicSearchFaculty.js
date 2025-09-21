@@ -13,7 +13,7 @@ const field = {
     staffId: "",
 }
 
-const Search = ({ mode, setItem }) => {
+const Search = ({ setItem }) => {
     const [searchItem, setSearchItem] = useState(field);
 
     const onChange = useCallback((field, value) => {
