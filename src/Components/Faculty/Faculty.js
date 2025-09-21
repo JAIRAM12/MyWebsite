@@ -8,7 +8,7 @@ import AppCard from "../essential/AppCard";
 import { MessageType } from "../essential/enums";
 import { AppNotification } from "../essential/AppNotification";
 
-export default function Faculty({ mode }) {
+export default function Faculty() {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
 
@@ -33,15 +33,10 @@ export default function Faculty({ mode }) {
             <div className="page" >
                 <div className="p-4">
                     <div className="mb-3 mt-3 mr-5 p-4">
-                        <Search setItem={(data) => setData(data)} mode={mode} />
+                        <Search setItem={(data) => setData(data)} />
                     </div>
                     <div className="content justify-content-center p-4 w-98">
                         <AppCard>
-                            {/* <div className="d-flex justify-content-end mb-3">
-                                <AppButton type="primary" onClick={() => navigate('/Addfaculty')}>
-                                    Add Faculty
-                                </AppButton>
-                            </div> */}
                             <FacultyTable data={data} />
                         </AppCard>
                     </div>

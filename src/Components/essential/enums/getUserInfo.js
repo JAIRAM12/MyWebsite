@@ -13,8 +13,8 @@ const getUserInfo = async (token) => {
     const decoded = jwtDecode(cleanToken);
     const username = decoded.id; // or `decoded.sub` if you stored it as subject
     const expiryDate = decoded.exp * 1000;
-
-    await Api("POST", `/api/faculty/${username}`).then((response) =>{
+    
+    await Api("POST", `/${username}`).then((response) =>{
       store.dispatch(setUserInfo(response.data, expiryDate));
     });
 

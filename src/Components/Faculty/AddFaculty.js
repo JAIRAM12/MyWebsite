@@ -9,7 +9,7 @@ import { Upload } from "antd";
 import { AppNotification } from "../essential/AppNotification";
 import { MessageType } from "../essential/enums";
 
-const AddStaff = ({ mode }) => {
+const AddFaculty = () => {
     const navigate = useNavigate();
     const { control, handleSubmit, reset, formState: { errors } } = useForm({
         defaultValues: {
@@ -317,4 +317,4 @@ const AddStaff = ({ mode }) => {
     );
 }
 
-export default memo(AddStaff)
+export default memo(AddFaculty)

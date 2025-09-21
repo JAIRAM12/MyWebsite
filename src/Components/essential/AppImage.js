@@ -1,7 +1,6 @@
 import { Image } from "antd";
 
 const AppImage = ({ data, style, className, name, ...props }) => {
-  // If data is an object with { type, data }, grab data.data
   const base64 = data?.data || data;
 
   const src = base64
@@ -14,7 +13,7 @@ const AppImage = ({ data, style, className, name, ...props }) => {
       alt={name}
       style={style}
       className={className}
-      preview={false}   // disables preview
+      preview={false}
       {...props}
     />
   );

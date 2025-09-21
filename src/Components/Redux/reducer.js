@@ -2,7 +2,7 @@ const initialState = {
   token: null,
   isLogin: false,
   expiryDate: null,
-  userInfo: {},
+  userInfo: null,
 };
 
 const tokenReducer = (state = initialState, action) => {

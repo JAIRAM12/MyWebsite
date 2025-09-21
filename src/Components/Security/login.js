@@ -29,7 +29,6 @@ const Login = () => {
                     setIsLoading(false)
                     localStorage.setItem("token", token);
                     AppNotification(MessageType.SUCCESS, "Success", "Success")
-                    navigate("/faculty")
                 }
             })
             .catch((error) => {
@@ -45,7 +44,7 @@ const Login = () => {
                 }
                 AppNotification(MessageType.ERROR, "Error", error);
             });
-    }, [setError, AppNotification, setIsLoading, navigate, username, password])
+    }, [setError, AppNotification, isLoading, setIsLoading, navigate, username, password])
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
