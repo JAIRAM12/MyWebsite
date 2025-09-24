@@ -1,5 +1,6 @@
 import { Card, Row, Col, Progress, Table, Statistic } from "antd";
 import { UserOutlined, FileDoneOutlined, TrophyOutlined, BookOutlined } from "@ant-design/icons";
+import AppCard from "../essential/AppCard";
 
 const data = [
   { key: "1", sno: 1, image: "/images/logo.jpg", name: "ABINAV", cse: "A", gender: "M", internship: "internship_cert.pdf", workshop: null, paper: "paper_presentation.pdf", sports: null },
