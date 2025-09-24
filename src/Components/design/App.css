@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Smooth transition */
+.custom-header {
+  padding: 0 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Navbar light/dark */
+.custom-header-light {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.custom-header-dark {
+  background-color: #001529 !important; /* fixed */
+  color: #fff !important;
+}
+
+.custom-menu-light .ant-menu-item-selected {
+  background-color: #f0f0f0 !important;
+}
+
+/* App background */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark {
+  background-color: #001529;
+  color: #ffffff;
+}
+
+/* ------------------ */
+/* Menu Text Styling */
+/* ------------------ */
+body.light .ant-menu .ant-menu-item,
+body.light .ant-menu .ant-menu-submenu-title {
+  color: #000 !important;
+}
+
+body.dark .ant-menu .ant-menu-item,
+body.dark .ant-menu .ant-menu-submenu-title {
+  color: #fff !important;
+}
+
+body.light .ant-menu .ant-menu-item a,
+body.light .ant-menu .ant-menu-submenu-title a {
+  color: #000 !important;
+  text-decoration: none;
+}
+
+body.dark .ant-menu .ant-menu-item a,
+body.dark .ant-menu .ant-menu-submenu-title a {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+body.dark .ant-menu .ant-menu-item:hover,
+body.dark .ant-menu .ant-menu-submenu-title:hover {
+  background: #001529 !important;
+}
+
+/* Selected item */
+body.light .ant-menu .ant-menu-item-selected a {
+  font-weight: bold;
+}
+
+body.dark .ant-menu .ant-menu-item-selected a {
+  font-weight: bold;
+  color: white !important;
+}
+
+/* ------------------ */
+/* Remove AntD underline effect */
+/* ------------------ */
+.ant-menu-horizontal > .ant-menu-item::after,
+.ant-menu-horizontal > .ant-menu-submenu::after,
+.ant-menu-horizontal > .ant-menu-item:hover::after,
+.ant-menu-horizontal > .ant-menu-item-selected::after,
+.ant-menu-horizontal > .ant-menu-submenu:hover::after,
+.ant-menu-horizontal > .ant-menu-submenu-selected::after {
+  border-bottom: none !important;
+  content: none !important;
+}
+
+/* Misc */
+.home-image {
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+}
+
+/* .card-registration {
+  max-width: 1000px;
+  margin: auto;
+} */
+
+.card-registration .card-body {
+  padding: 2rem;
+}
+
+.card-registration .select-arrow {
+  top: 13px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  margin-top: auto;
+}
+
+.error-msg {
+  font-size: 0.85rem;
+  color: #d9534f;
+  display: block;
+}
+
+.card-registration.dark-mode {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+}
+
+.card-registration.light-mode {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.card-registration.dark-mode label,
+.card-registration.dark-mode h3,
+.card-registration.dark-mode span {
+  color: #ffffff !important;
+}

@@ -1,10 +1,10 @@
 import { Card } from "antd";
-import AppTable from "../design/AppTable";
-import { useEffect, useState } from "react";
+import AppTable from "../essential/AppTable";
+import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function FacultyTable({ data }) {
-    const [facultyItems, setFacultyItems] = useState(data || []);
+const FacultyTable = ({ data }) => {
+    const [facultyItems, setFacultyItems] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,12 +16,12 @@ export default function FacultyTable({ data }) {
     const facultyColumn = [
         {
             title: 'Faculty ID',
-            dataIndex: 'facultyid',
+            dataIndex: 'staffId',
             key: 'facultyid',
-            render: (text) => (
+            render: (text, record) => (
                 <span
                     style={{ color: 'blue', cursor: 'pointer' }}
-                    onClick={() => navigate('/Facultyinfo')}
+                    onClick={() => navigate('/Facultyinfo/' + record.id)}
                 >
                     {text}
                 </span>
@@ -29,29 +29,29 @@ export default function FacultyTable({ data }) {
         },
         {
             title: 'Faculty Name',
-            dataIndex: 'facultyname',
+            dataIndex: 'name',
             key: 'facultyname',
         },
         {
             title: 'Faculty Department',
-            dataIndex: 'facultydepartment',
+            dataIndex: 'department',
             key: 'facultydepartment',
         },
         {
             title: 'Faculty Email',
-            dataIndex: 'facultyemail',
+            dataIndex: 'email',
             key: 'facultyemail',
         },
         {
-            title: 'Faculty Age',
-            dataIndex: 'facultyage',
-            key: 'facultyage',
+            title: 'Position',
+            dataIndex: 'position',
+            key: 'position',
         }
     ];
 
     return (
-        // <div className="glass-container mt-2"> //Table design isn't fulled completed 
-            <AppTable columns={facultyColumn} dataSource={facultyItems} />
-        // </div>
+        <AppTable columns={facultyColumn} dataSource={facultyItems} />
     );
 }
+
+export default memo(FacultyTable)

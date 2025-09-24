@@ -1,44 +1,44 @@
 import { useNavigate } from "react-router-dom";
-import AddFaculty from "./AddFaculty";
-import AppButton from "../design/AppButton";
-import AppNav from "../design/AppNav";
-import AppTable from "../design/AppTable";
 import FacultyTable from "./FacultyTable";
+import Search from "./BasicSearchFaculty";
+import { useCallback, useContext, useEffect, useState } from "react";
+import Api from "../essential/API";
+import AppButton from "../essential/AppButton";
+import AppCard from "../essential/AppCard";
+import { MessageType } from "../essential/enums";
+import { AppNotification } from "../essential/AppNotification";
 
 export default function Faculty() {
     const navigate = useNavigate();
-    const data = [
-        {
-            facultyid: "VH123",
-            facultyname: "js",
-            facultyemail: "jsjairam01@gmail.com",
-            facultyage: "45",
-            facultydepartment: "CS"
-        },
-        {
-            facultyid: "VH145",
-            facultyname: "js",
-            facultyemail: "jsjairam01@gmail.com",
-            facultyage: "45",
-            facultydepartment: "CS"
-        }
-    ];
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = useCallback(async () => {
+        await Api("GET", "/api/faculty/all")
+            .then((response) => {
+                const data = response.data
+                if (response.status === 200) {
+                    setData(data)
+                }
+            }).catch((error) => {
+                AppNotification(MessageType.ERROR, "Error", error)
+            });
+    },[])
 
     return (
         <>
-            <div className='home-container'>
-                <AppNav />
-                <div style={{ padding: 20 }} >
-                    <div className="d-flex justify-content-end mb-5 me-5 mt-3">
-                        <AppButton type="primary" onClick={() => navigate('/Addfaculty')}>
-                            Add Faculty
-                        </AppButton>
+            <div className="page" >
+                <div className="p-4">
+                    <div className="mb-3 mt-3 mr-5 p-4">
+                        <Search setItem={(data) => setData(data)} />
                     </div>
-                    <div className="content" style={{
-                        maxWidth: "80%",   // adjust width as needed
-                        margin: "0 auto",    // centers horizontally
-                    }}>
-                        <FacultyTable data={data} />
+                    <div className="content justify-content-center p-4 w-98">
+                        <AppCard>
+                            <FacultyTable data={data} />
+                        </AppCard>
                     </div>
                 </div>
             </div>

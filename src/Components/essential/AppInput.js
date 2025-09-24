@@ -1,6 +1,7 @@
 import { Input, InputNumber, Select } from "antd";
+import { memo } from "react";
 
-export default function AppInput({ inputLabel, inputName, inputType, ...props }) {
+const AppInput = ({ inputName, inputType, ...props }) => {
     const renderInput = () => {
         switch (inputType) {
             case "text":
@@ -17,9 +18,10 @@ export default function AppInput({ inputLabel, inputName, inputType, ...props })
     };
 
     return (
-        <div style={{ marginBottom: "1rem" }}>
-            {inputLabel && <label style={{ display: "block", marginBottom: "5px" }}>{inputLabel}</label>}
+        <div className="mb-1">
             {renderInput()}
         </div>
     );
 }
+
+export default memo(AppInput);
