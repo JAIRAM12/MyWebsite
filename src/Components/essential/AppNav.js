@@ -46,7 +46,7 @@ export default function AppNav() {
       roles: ["admin"],
       children: [
         { key: "/AddFaculty", label: "Add Faculty", roles: ["admin"] },
-        { key: "/ManageFaculty", label: "Manage Faculty", roles: ["admin"] },
+        // { key: "/ManageFaculty", label: "Manage Faculty", roles: ["admin"] },
       ],
     },
     { key: "/upload", label: "Upload", roles: ["staff", "admin"] },
