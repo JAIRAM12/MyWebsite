@@ -12,7 +12,7 @@ export function useAuth() {
     useEffect(() => {
         const checkAuth = async () => {
             const localToken = localStorage.getItem("token");
-
+            
             if (token || localToken) {
                 dispatch(addToken(localToken));
                 try {

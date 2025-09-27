@@ -1,10 +1,10 @@
 import React from "react";
 import "./design/App.css";
 import AppRoutes from "./essential/AppRoutes"
-import { Spin } from "antd";
 import { useRoutesData } from "./essential/Hooks/useRoutesData";
 import { useAuth } from "./essential/Hooks/useAuth";
 import { useSelector } from "react-redux";
+import AppLoading from "./essential/AppLoading";
 
 export default function App() {
   const { loading } = useAuth();
@@ -13,15 +13,9 @@ export default function App() {
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Spin size="large" />
+      <div className="min-h-screen flex items-center justify-center">
+        <AppLoading size="large" />
+        <span className="ml-3 text-lg">Loading page...</span>
       </div>
     );
   }

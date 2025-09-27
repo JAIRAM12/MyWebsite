@@ -38,7 +38,7 @@ export default function AppNav() {
   const { name, image, id } = user || {};
 
   const items = [
-    { key: "/faculty", label: "Faculty", roles: ["admin", "staff", "student"] },
+    { key: "/Faculty", label: "Faculty", roles: ["admin", "staff", "student"] },
     { key: "/scoreboard", label: "Scoreboard", roles: ["admin", "staff", "student"] },
     {
       key: "/admin",

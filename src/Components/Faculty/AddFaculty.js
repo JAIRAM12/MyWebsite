@@ -49,7 +49,7 @@ const AddFaculty = () => {
             .then((response) => {
                 const data = response.data
                 if (response.status === 200) {
-                    navigate("/faculty");
+                    navigate("/Faculty");
                     AppNotification(MessageType.SUCCESS, "Success", "Data Successfully Upload ")
                     reset();
                 }
