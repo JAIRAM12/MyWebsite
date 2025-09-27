@@ -1,19 +1,19 @@
 import { Input, InputNumber, Select } from "antd";
-import { memo } from "react";
+import { memo, forwardRef } from "react";
 
-const AppInput = ({ inputName, inputType, ...props }) => {
+const AppInput = forwardRef(({ inputName, inputType, ...props }, ref) => {
     const renderInput = () => {
         switch (inputType) {
             case "text":
             case "email":
             case "password":
-                return <Input name={inputName} {...props} />;
+                return <Input name={inputName} ref={ref} {...props} />;
             case "number":
-                return <InputNumber name={inputName} style={{ width: "100%" }} {...props} />;
+                return <InputNumber name={inputName} style={{ width: "100%" }} ref={ref} {...props} />;
             case "select":
-                return <Select name={inputName} style={{ width: "100%" }} {...props} />;
+                return <Select name={inputName} style={{ width: "100%" }} ref={ref} {...props} />;
             default:
-                return <Input name={inputName} {...props} />;
+                return <Input name={inputName} ref={ref} {...props} />;
         }
     };
 
@@ -22,6 +22,6 @@ const AppInput = ({ inputName, inputType, ...props }) => {
             {renderInput()}
         </div>
     );
-}
+});
 
 export default memo(AppInput);

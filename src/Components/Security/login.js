@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import AppInput from "../essential/AppInput";
 import AppButton from "../essential/AppButton";
@@ -7,28 +6,27 @@ import Api from "../essential/API";
 import { AppNotification } from "../essential/AppNotification";
 import { MessageType } from "../essential/enums";
 import { addToken } from "../Redux/Action";
+import { Controller, useForm } from "react-hook-form";
 
 const Login = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const { control, handleSubmit, reset, formState: { errors } } = useForm({})
 
-    const handleSubmit = useCallback(async (e) => {
-        e.preventDefault();
+
+    const onSubmit = async (data) => {
         setIsLoading(true);
         setError("");
-        const payload = { username, password }
-        await Api("POST", "/login", payload)
+        await Api("POST", "/login", data)
             .then((response) => {
                 if (response.status === 200) {
                     const { token } = response.data
                     dispatch((addToken(token)));
+                    AppNotification(MessageType.SUCCESS, "Success", "Success")
                     setIsLoading(false)
                     localStorage.setItem("token", token);
-                    AppNotification(MessageType.SUCCESS, "Success", "Success")
+                    reset();
                 }
             })
             .catch((error) => {
@@ -42,9 +40,9 @@ const Login = () => {
                 } else {
                     setError("Login failed. Please try again later.");
                 }
-                AppNotification(MessageType.ERROR, "Error", error);
+                AppNotification(MessageType.ERROR, "Error", "Login failed");
             });
-    }, [setError, AppNotification, isLoading, setIsLoading, navigate, username, password])
+    }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -56,42 +54,58 @@ const Login = () => {
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-medium mb-2">
                             Staff ID / Student ID
                         </label>
-                        <AppInput
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                            placeholder="Enter your ID"
-                            required
-                            disabled={isLoading}
+                        <Controller
+                            name="username"
+                            control={control}
+                            rules={{ required: "Name is required" }}
+                            render={({ field }) => (
+                                <AppInput
+                                    {...field}
+                                    type="text"
+                                    className="w-full px-4 py-2 rounded-lg"
+                                    placeholder="Enter your ID"
+                                    status={errors.username ? 'error' : ''}
+                                    disabled={isLoading}
+                                />
+                            )}
                         />
+                        {errors.username && <span className="error-msg">{errors.username.message}</span>}
                     </div>
-
                     <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-medium mb-2">
                             Password
                         </label>
-                        <AppInput
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                            placeholder="Enter your password"
-                            required
-                            disabled={isLoading}
+                        <Controller
+                            name="password"
+                            control={control}
+                            rules={{ required: "Password is required" }}
+                            render={({ field }) => (
+                                <AppInput
+                                    {...field}
+                                    type="password"
+                                    className="w-full px-4 py-2 rounded-lg"
+                                    status={errors.password ? 'error' : ''}
+                                    placeholder="Enter your password"
+                                    disabled={isLoading}
+                                />
+                            )}
                         />
+                        {errors.password && <span className="error-msg">{errors.password.message}</span>}
                     </div>
 
                     <AppButton
                         htmlType="submit"
-                        disabled={isLoading}
-                        type="primary"
-                        className='w-full py-2 px-4 rounded-lg'
+                        btndisabled={isLoading}
+                        btntype="primary"
+                        btnClassName='w-full py-2 px-4 rounded-lg'
+                        btnId={'loginBtn'}
+                        aria-busy={isLoading}
+                        aria-label={isLoading ? "Logging in to your account" : "Login to your account"}
                     >
                         {isLoading ? "Logging in..." : "Login"}
                     </AppButton>
@@ -107,9 +121,9 @@ const Login = () => {
                         Register as Faculty
                     </button>
                 </div> */}
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
-export default Login;
+export default memo(Login);

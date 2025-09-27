@@ -9,18 +9,17 @@ const Api = async (method, path, payload = null) => {
   const { token = null, isLogin, expiryDate } = state;
   const DAOServiceURL = process.env.REACT_APP_API_URL;
 
-  // ✅ check expiry
   if (isLogin && expiryDate && Date.now() > expiryDate) {
     console.warn("⚠️ Token expired, logging out...");
     store.dispatch(clearToken());
-    localStorage.removeItem("token"); // also clear localStorage
-    window.location.href = "/"; // fallback redirect
+    localStorage.removeItem("token");
+    window.location.href = "/";
     AppNotification(MessageType.ERROR, "Error", "Token expired");
+    throw new Error("Token expired");
   }
 
   try {
-    const authToken = token ?? localStorage.getItem("token"); // ✅ always sync with Redux + storage
-
+    const authToken = token ?? localStorage.getItem("token");
     const options = {
       method,
       url: `${DAOServiceURL}${path}`,
@@ -35,7 +34,7 @@ const Api = async (method, path, payload = null) => {
     return response;
   } catch (error) {
     console.error("❌ API Error:", error);
-    return error;
+    throw error;
   }
 };
 

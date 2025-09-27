@@ -12,7 +12,7 @@
         "isProtected": true
     },
     {
-        "path": "/faculty",
+        "path": "/Faculty",
         "component": "Faculty",
         "roles": ["admin", "staff", "student"],
         "isProtected": true
