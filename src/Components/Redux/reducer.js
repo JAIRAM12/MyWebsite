@@ -11,11 +11,11 @@ const tokenReducer = (state = initialState, action) => {
       return {
         token: action.payload.token,
         isLogin: true,
+        expiryDate: action.payload.expiryDate,
       };
     case "SET_USER_INFO":
   return {
     ...state,
-    expiryDate: action.payload.expiryDate,
     userInfo: {
       ...action.payload.user,
     },

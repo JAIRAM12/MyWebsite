@@ -1,4 +1,5 @@
 import { Tag } from "antd";
+import { memo } from "react";
 
 const AppTag = ({color = 'blue', children, ...props }) =>{
     return(
@@ -6,4 +7,4 @@ const AppTag = ({color = 'blue', children, ...props }) =>{
     )
 }
 
-export default AppTag;
+export default memo(AppTag);

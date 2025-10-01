@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, Children, useCallback } from "react";
+import { useEffect, useState, useRef, Children, useCallback, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AppButton from "../essential/AppButton";
 import Api from "../essential/API";
@@ -10,8 +10,9 @@ import { AppNotification } from "../essential/AppNotification";
 import { MessageType } from "../essential/enums";
 import AppImage from "../essential/AppImage";
 import AppTag from "../essential/AppTag";
+import Upcoming from "../essential/enums/FutureUpcoming";
 
-export default function FacultyInfo(props) {
+const FacultyInfo = (props) => {
     const { id } = useParams();
     const [staff, setStaff] = useState({
         name: "",
@@ -30,7 +31,7 @@ export default function FacultyInfo(props) {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [id]);
 
     const fetchData = useCallback(async () => {
         await Api("POST", `/api/faculty/${id}`)
@@ -49,9 +50,9 @@ export default function FacultyInfo(props) {
     }
 
     const items = [
-        { key: "1", tab: "Detail", children: <Detail data={staff} /> },
-        { key: "2", tab: "Student Info", children: <StudentInfo id={staff.staffId} /> },
-        { key: "3", tab: "Student Leave", children: <h1>helo</h1> },
+        { key: "1", label: "Detail", children: <Detail data={staff} /> },
+        { key: "2", label: "Student Info", children: <StudentInfo id={staff.staffId} /> },
+        { key: "3", label: "Student Leave", children: <Upcoming  name="Student Leave Feature" /> },
     ]
 
     return (
@@ -65,23 +66,23 @@ export default function FacultyInfo(props) {
                                     <AppCard title={'Welcome, ' + staff.name}>
                                         <div className="text-center mb-3">
                                             <AppImage
-                                                data={staff.staffImage?.data}
+                                                data={staff.image?.data}
                                                 name={staff.name}
                                                 style={{ width: "100px", height: "100px", objectFit: "cover" }}
                                                 className="mx-auto d-block rounded-circle"
                                             />
                                             <h5 className="text-center mb-1">{staff.name}</h5>
                                             <p className="text-center text-secondary mb-4">{staff.position}</p>
-                                            <AppButton type="primary" className='mr-2' onClick={() => navigate('/AddMeenties', { state: { staffId: staff.staffId, id: staff.id } })}>
+                                            <AppButton type="primary" btnId={'addmeenties'} className='mr-2' btnOnClick={() => navigate('/AddMeenties', { state: { staffId: staff.staffId, id: staff.id } })}>
                                                 Add Meenties
                                             </AppButton>
-                                            <AppButton type="primary" onClick={() => navigate('/Meenties', { state: { staffId: staff.staffId, id: staff.id } })}>
+                                            <AppButton type="primary" btnId={'upload'} btnOnClick={() => navigate('/Meenties', { state: { staffId: staff.staffId, id: staff.id } })}>
                                                 Upload
                                             </AppButton>
                                         </div>
                                     </AppCard>
                                 </div>
-                                <div className="col-12">
+                                {/* <div className="col-12">
                                     <AppCard title={'Social'}>
                                         <a href="#!" className="d-inline-block bg-dark link-light lh-1 p-2 rounded mr-2">
                                             <i className="bi bi-youtube"></i>
@@ -96,7 +97,7 @@ export default function FacultyInfo(props) {
                                             <i className="bi bi-linkedin"></i>
                                         </a>
                                     </AppCard>
-                                </div>
+                                </div> */}
                                 <div className="col-12">
                                     <AppCard title={'About Me'}>
                                         <ul className="list-group list-group-flush mb-0">
@@ -140,3 +141,5 @@ export default function FacultyInfo(props) {
         </>
     );
 }
+
+export default memo(FacultyInfo);

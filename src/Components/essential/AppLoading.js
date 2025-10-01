@@ -1,8 +1,8 @@
 import { Spin } from "antd"
 
-const AppLoading = ({children , ...props}) => {
+const AppLoading = ({children, size = "default" , ...props}) => {
 
-    <Spin size="large" {...props} >{children}</Spin>
+    <Spin size={size} {...props} >{children}</Spin>
 }
 
 export default AppLoading;

@@ -7,7 +7,7 @@ const AppButton = ({
     btndisabled,
     btnStyle,
     btnClassName,
-    // btnOnClick,
+    btnOnClick,
     htmlType = 'button',
     btntype = 'default',
     children,
@@ -19,7 +19,7 @@ const AppButton = ({
             disabled={btndisabled}
             style={btnStyle}
             className={btnClassName}
-            // onClick={btnOnClick}
+            onClick={btnOnClick}
             htmlType={htmlType}
             type={btntype}
             {...props}

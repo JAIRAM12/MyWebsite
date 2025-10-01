@@ -1,12 +1,10 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import * as MasterIndex from "../PagePermission/MasterIndex";
 import { lazy, memo, Suspense, useEffect, useState } from "react";
-import { Spin } from "antd";
-import NotFound from "../PagePermission/NotFound";
-
+import AppLoading from "./AppLoading";
 const RouteLoading = () => (
     <div className="fixed inset-0 flex items-center justify-center bg-white/80 z-50">
-        <Spin size="large" />
+        <AppLoading size="large" />
         <span className="ml-3 text-lg">Loading page...</span>
     </div>
 );
@@ -61,7 +59,7 @@ const AppRoutes = ({ isLogin, routesData }) => {
                     path="/"
                     element={
                         isLogin ? (
-                            <Navigate to="/faculty" replace />
+                            <Navigate to="/Faculty" replace />
                         ) : (
                             <AuthLayout>
                                 <MasterIndex.Login />

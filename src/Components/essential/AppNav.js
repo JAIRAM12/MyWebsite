@@ -24,7 +24,15 @@ const filterMenuByRole = (items, userRole) => {
       }
       return item;
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    .map((item) => ({
+      ...item,
+      key: item.key || item.label, // fallback key if missing
+      children: item.children?.map(child => ({
+        ...child,
+        key: child.key || child.label
+      }))
+    }));
 };
 
 export default function AppNav() {
@@ -49,7 +57,7 @@ export default function AppNav() {
         // { key: "/ManageFaculty", label: "Manage Faculty", roles: ["admin"] },
       ],
     },
-    { key: "/upload", label: "Upload", roles: ["staff", "admin"] },
+    // { key: "/upload", label: "Upload", roles: ["staff", "admin"] },
   ];
 
   const allowedItems = filterMenuByRole(items, role);
@@ -63,6 +71,7 @@ export default function AppNav() {
       <div className="d-flex align-items-center mr-2">
         <AppImage
           name="Website logo"
+          lcp
           style={{ height: "50px", borderRadius: "50%", objectFit: "cover" }}
         />
         <span className="fw-bold ml-2">My Website</span>
@@ -104,15 +113,17 @@ export default function AppNav() {
         {isLogin && (
           <div className="d-flex align-items-center mr-2">
             <AppButton
+              btnId="logoutBtn"
+              aria-label="Logout"
               type="primary"
-              style={{ padding: "1px" }}
-              icon={<LoginOutlined />}
-              onClick={() => {
+              className='rounded-lg'
+              style={{ padding: "12px" }}
+              btnOnClick={() => {
                 dispatch(clearToken());
                 localStorage.removeItem("token");
                 navigate("/");
               }}
-            />
+            ><LoginOutlined /></AppButton>
           </div>
         )}
       </div>

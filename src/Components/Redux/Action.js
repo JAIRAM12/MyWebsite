@@ -3,16 +3,15 @@ export const clearToken = () => ({
 });
 
 // takes token + expiry from backend
-export const addToken = (token, expiresAt) => ({
+export const addToken = (token, expiryDate) => ({
     type: "SET_TOKEN",
-    payload: { token },
+    payload: { expiryDate, token },
 });
 
 // takes user object {id, role, avatar...}
 export const setUserInfo = (user, expiryDate) => ({
     type: "SET_USER_INFO",
     payload: {
-        user,
-        expiryDate,
+        user
     },
 });
