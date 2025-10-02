@@ -1,9 +1,10 @@
+import FutureUpcoming from "../essential/enums/FutureUpcoming";
 
 
 const Achedamic = (props) =>{
     return(
         <>
-        <h1>hello</h1>
+        <FutureUpcoming name="Achedamic Feature"/>
         </>
     )
 }

@@ -1,9 +1,10 @@
+import FutureUpcoming from "../essential/enums/FutureUpcoming";
 
 
 const Event = (props) =>{
     return (
         <>
-        <h1>Hello</h1>
+        <FutureUpcoming name="Event Feature"/>
         </>
     )
 }

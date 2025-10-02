@@ -5,17 +5,17 @@ import { jwtDecode } from "jwt-decode";
 import { AppNotification } from "../AppNotification";
 import { MessageType } from "../enums";
 
-const getUserInfo = async (token) => {
-  if (!token) return
+const getUserInfo = async (id) => {
+  if (!id) return
 
   try {
-    const cleanToken = token || '';
-    const decoded = jwtDecode(cleanToken);
-    const username = decoded.id; // or `decoded.sub` if you stored it as subject
-    const expiryDate = decoded.exp * 1000;
+    // const cleanToken = token || '';
+    // const decoded = jwtDecode(cleanToken);
+    // const username = decoded.id; // or `decoded.sub` if you stored it as subject
+    // const expiryDate = decoded.exp * 1000;
     
-    await Api("POST", `/${username}`).then((response) =>{
-      store.dispatch(setUserInfo(response.data, expiryDate));
+    await Api("POST", `/${id}`).then((response) =>{
+      store.dispatch(setUserInfo(response.data));
     });
 
   } catch (error) {

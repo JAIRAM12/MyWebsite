@@ -56,7 +56,7 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-medium mb-2">
+                        <label htmlFor='id' className="block text-gray-700 text-sm font-medium mb-2">
                             Staff ID / Student ID
                         </label>
                         <Controller
@@ -77,7 +77,7 @@ const Login = () => {
                         {errors.username && <span className="error-msg">{errors.username.message}</span>}
                     </div>
                     <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-medium mb-2">
+                        <label htmlFor='Password' className="block text-gray-700 text-sm font-medium mb-2">
                             Password
                         </label>
                         <Controller

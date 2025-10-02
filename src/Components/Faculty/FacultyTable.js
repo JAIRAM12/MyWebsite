@@ -1,12 +1,10 @@
-import { Card } from "antd";
 import AppTable from "../essential/AppTable";
 import { memo, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const FacultyTable = ({ data }) => {
     const [facultyItems, setFacultyItems] = useState([]);
-    const navigate = useNavigate();
-
+    
     useEffect(() => {
         if (data) {
             setFacultyItems(data);
@@ -19,12 +17,9 @@ const FacultyTable = ({ data }) => {
             dataIndex: 'staffId',
             key: 'facultyid',
             render: (text, record) => (
-                <span
-                    style={{ color: 'blue', cursor: 'pointer' }}
-                    onClick={() => navigate('/Facultyinfo/' + record.id)}
-                >
+                <Link to={`/Facultyinfo/${record.id}`} className="text-decoration-none" style={{ color: 'blue' }}>
                     {text}
-                </span>
+                </Link>
             )
         },
         {
@@ -50,7 +45,7 @@ const FacultyTable = ({ data }) => {
     ];
 
     return (
-        <AppTable columns={facultyColumn} dataSource={facultyItems} />
+        <AppTable id={'FacultyTable'} rowKey={'FacultyTable'} columns={facultyColumn} dataSource={facultyItems} />
     );
 }
 

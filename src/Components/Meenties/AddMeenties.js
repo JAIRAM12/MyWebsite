@@ -231,6 +231,9 @@ export default function AddMeenties() {
                             <AppButton type="primary" className='mt-3' onClick={Submit}>
                                 Submit
                             </AppButton>
+                            <AppButton className='mt-3' onClick={() => navigate(-1)} style={{ marginLeft: 8 }}>
+                                Back
+                            </AppButton>
                         </div>
                     </AppCard>
                 </div>
