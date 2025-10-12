@@ -1,13 +1,13 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
-import AppInput from "../essential/AppInput";
-import AppButton from "../essential/AppButton";
+import AppInput from "../../essential/AppInput";
+import AppButton from "../../essential/AppButton";
 import { useNavigate } from "react-router-dom";
-import Api from "../essential/API";
+import Api from "../../essential/API";
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload } from "antd";
-import { AppNotification } from "../essential/AppNotification";
-import { MessageType } from "../essential/enums";
+import { AppNotification } from "../../essential/AppNotification";
+import { MessageType } from "../../essential/enums";
 
 const AddFaculty = () => {
     const navigate = useNavigate();

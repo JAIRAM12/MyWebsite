@@ -1,5 +1,5 @@
 import { memo } from "react";
-import AppTag from "../../essential/AppTag";
+import AppTabs from "../../../essential/AppTabs";
 
 const Detail = ({ data }) => {
     return (

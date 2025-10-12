@@ -1,6 +1,6 @@
-import AppTable from "../essential/AppTable";
 import { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AppTable from '../../essential/AppTable'
 
 const FacultyTable = ({ data }) => {
     const [facultyItems, setFacultyItems] = useState([]);

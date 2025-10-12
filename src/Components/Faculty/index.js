@@ -1,6 +1,7 @@
-import AddFaculty from "./AddFaculty";
-import Faculty from "./Faculty";
-import FacultyInfo from "./FacultyInfo";
+import AddFaculty from "./FormUpload/AddFaculty";
+import Faculty from "./FacultySearch/Faculty";
+import FacultyInfo from "./FacultyInfo/FacultyInfo";
+import Upload from "./UploadSheet/Upload"
 
 
-export { Faculty, FacultyInfo, AddFaculty };
+export { Faculty, FacultyInfo, AddFaculty, Upload };

@@ -1,93 +1,91 @@
 import AppButton from "../essential/AppButton";
 
 
-export default function Home({ mode }) {
-  const placementColumns = [
-    { title: 'S.NO', dataIndex: 'sno', key: 'sno' },
-    { title: 'COMPANY', dataIndex: 'company', key: 'company' },
-    { title: 'ROLE', dataIndex: 'role', key: 'role' },
-    { title: 'LPA', dataIndex: 'lpa', key: 'lpa' },
-    { title: 'BATCH', dataIndex: 'batch', key: 'batch' },
-  ];
+import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import HeroSection from "./Components/HeroSection";
+import LogosSection from "./Components/LogosSection";
+import BenefitsSection from "./Components/BenefitsSection";
+import TestimonialsSection from "./Components/TestimonialsSection";
+import FAQSection from "./Components/FAQSection";
+import Footer from "./Components/Footer";
 
-  const placementData = [
-    { key: '1', sno: 1, company: 'WILEY EDGE', role: 'SOFTWARE DEV', lpa: '9 LPA', batch: 2023 },
-    { key: '2', sno: 2, company: 'TCS', role: 'PROGRAM TRAINEE', lpa: '8 LPA', batch: 2023 },
-    { key: '3', sno: 3, company: 'VIRTUSA', role: 'SOFTWARE ENGINEER', lpa: '7 LPA', batch: 2023 },
-  ];
+export default function Home() {
+  const goToTopBtnRef = useRef(null);
+
+  useEffect(() => {
+    // Go To Top Button
+    const goToTopBtn = goToTopBtnRef.current;
+    if (goToTopBtn) {
+      const handleScroll = () => {
+        if (window.scrollY > 300) {
+          goToTopBtn.classList.add('show');
+        } else {
+          goToTopBtn.classList.remove('show');
+        }
+      };
+
+      const handleClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      goToTopBtn.addEventListener('click', handleClick);
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        goToTopBtn.removeEventListener('click', handleClick);
+      };
+    }
+  }, []);
+
+  // Scroll Reveal Animation
+  useEffect(() => {
+    const scrollElements = document.querySelectorAll(".reveal-on-scroll");
+
+    const elementInView = (el, dividend = 1) => {
+      const elementTop = el.getBoundingClientRect().top;
+      return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
+    };
+
+    const displayScrollElement = (element) => {
+      element.classList.add("is-visible");
+    };
+
+    const handleScrollAnimation = () => {
+      scrollElements.forEach((el) => {
+        if (elementInView(el, 1.15)) {
+          displayScrollElement(el);
+        }
+      });
+    };
+
+    handleScrollAnimation(); // Initial check
+    window.addEventListener("scroll", handleScrollAnimation);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollAnimation);
+    };
+  }, []);
 
   return (
-    <div
-      style={{
-        backgroundColor: mode ? "#121212" : "#ffffff",
-        color: mode ? "#ffffff" : "#000000",
-        minHeight: "100vh",
-      }}
-    >
+    <main>
+      <HeroSection />
+      <LogosSection />
+      <BenefitsSection />
+      <TestimonialsSection />
+      <FAQSection />
+      <Footer />
 
-      {/* Hero Section */}
-      <div className="p-5 text-center bg-success text-white rounded shadow-sm">
-        <h1 className="display-5 fw-bold">VEL TECH HIGH TECH</h1>
-        <p className="lead">
-          One of India's Best Top Ranked Colleges — A legacy of excellence in engineering and innovation.
-        </p>
-        <AppButton type="primary">APPLY FOR INTERNSHIP</AppButton>
-      </div>
-
-      {/* Infrastructure */}
-      <section className="my-5">
-        <h2 className="text-center mb-4">INFRASTRUCTURE</h2>
-        <div className="container-fluid">
-          <div className="row text-center">
-            <div className="col-lg-4 col-md-6 col-12"><img src="https://images.pexels.com/photos/12091126/pexels-photo-12091126.jpeg" className="home-image" alt="Infrastructure 1" /></div>
-            <div className="col-lg-4 col-md-6 col-12"><img src="https://images.pexels.com/photos/12091126/pexels-photo-12091126.jpeg" className="home-image" alt="Infrastructure 2" /></div>
-            <div className="col-lg-4 col-md-6 col-12"><img src="https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg?_gl=1*bo5itk*_ga*ODY0NTEzOTkyLjE3NTUzNjAxNTc.*_ga_8JE65Q40S6*czE3NTU0NDU3ODkkbzIkZzEkdDE3NTU0NDYxMjQkajMyJGwwJGgw" className="home-image" alt="Infrastructure 3" /></div>
-          </div>
-        </div>
-      </section>
-
-      {/* News */}
-      <div className="p-3 mb-4 bg-success text-white text-center rounded">
-        <strong>NEWS:</strong> Admissions open for 2025 Batch. Apply Now!
-      </div>
-
-      {/* Ranking */}
-      <section className="jumbotron text-center my-5">
-        <h2 className="fw-bold">RANKING</h2>
-        <p className="lead">
-          Vel Tech was ranked <strong>83</strong> among engineering colleges in India by NIRF, recognized for its innovation & research excellence.
-        </p>
-      </section>
-
-      {/* Placements */}
-      <section className="my-5">
-        <h2 className="text-center mb-4">PLACEMENTS</h2>
-        <div className="container">
-          <AppTable columns={placementColumns} dataSource={placementData} pagination={false} />
-        </div>
-      </section>
-
-      {/* Campus Life */}
-      <section className="my-5">
-        <h2 className="text-center mb-4">CAMPUS LIFE</h2>
-        <div className="container-fluid">
-          <div className="row text-center">
-            <div className="col-lg-3 col-md-6 col-12"><img src="/images/collageHome.jpg" className="home-image" alt="Campus 1" /></div>
-            <div className="col-lg-3 col-md-6 col-12"><img src="/images/22.jpg" className="home-image" alt="Campus 2" /></div>
-            <div className="col-lg-3 col-md-6 col-12"><img src="/images/S.jpg" className="home-image" alt="Campus 3" /></div>
-            <div className="col-lg-3 col-md-6 col-12"><img src="/images/09.jpg" className="img-fluid rounded shadow mb-3" alt="Campus 4" /></div>
-          </div>
-        </div>
-      </section>
-
-      {/* History */}
-      <section className="jumbotron my-5">
-        <h2 className="fw-bold text-center">HISTORY</h2>
-        <p className="lead text-center">
-          Established in <strong>1997</strong> by Dr. R. Rangarajan, Vel Tech has grown into a globally recognized institution, 
-          committed to innovation, research, and world-class education.
-        </p>
-      </section>
-    </div>
+      <button
+        ref={goToTopBtnRef}
+        id="goToTopBtn"
+        className="btn-go-to-top"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+      </button>
+    </main>
   );
 }

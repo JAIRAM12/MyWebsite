@@ -1,47 +1,94 @@
-import { Layout, Menu } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AppImage from "./AppImage";
 import AppButton from "./AppButton";
-import { LoginOutlined } from "@ant-design/icons";
+import { LoginOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../Redux/Action";
+import { useEffect, useRef, useState } from "react";
 
-const { Header } = Layout;
+function NavItem({ item, selectedKey }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef(null);
 
-// 🔹 Recursive filter function for menu items
-const filterMenuByRole = (items, userRole) => {
-  return items
-    .map((item) => {
-      if (
-        item.roles &&
-        !item.roles.map((r) => r.toLowerCase()).includes(userRole?.toLowerCase())
-      ) {
-        return null;
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 150); // Delay before closing
+  };
+
+  const handleClick = (e) => {
+    if (item.children) {
+      e.preventDefault();
+      setIsOpen(!isOpen);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
-      if (item.children) {
-        const children = filterMenuByRole(item.children, userRole);
-        return children.length ? { ...item, children } : null;
-      }
-      return item;
-    })
-    .filter(Boolean)
-    .map((item) => ({
-      ...item,
-      key: item.key || item.label, // fallback key if missing
-      children: item.children?.map(child => ({
-        ...child,
-        key: child.key || child.label
-      }))
-    }));
-};
+    };
+  }, []);
+
+  return (
+    <div
+      className="nav-item"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Parent link */}
+      <Link
+        to={item.children ? '#' : item.key}
+        className={`nav-link-text ${selectedKey === item.key ? "nav-link-active" : ""}`}
+        onClick={handleClick}
+      >
+        {item.label}
+        {item.children && (
+          <span className="nav-arrow" style={{ marginLeft: '4px', fontSize: '10px' }}>
+            {isOpen ? <UpOutlined /> : <DownOutlined />}
+          </span>
+        )}
+      </Link>
+
+      {/* Submenu */}
+      {item.children && item.children.length > 0 && (
+        <div
+          className={`nav-submenu ${isOpen ? "show" : ""}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {item.children.map((child) => (
+            <Link
+              key={child.key}
+              to={child.key}
+              className={`nav-link-text ${selectedKey === child.key ? "nav-link-active" : ""}`}
+              onClick={() => setIsOpen(false)}
+            >
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function AppNav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const selectedKey = location.pathname === "/" ? "/home" : location.pathname;
 
   const { isLogin, userInfo } = useSelector((state) => state.token);
-  const dispatch = useDispatch();
   const { role, user } = userInfo || {};
   const { name, image, id } = user || {};
 
@@ -54,79 +101,96 @@ export default function AppNav() {
       roles: ["admin"],
       children: [
         { key: "/AddFaculty", label: "Add Faculty", roles: ["admin"] },
-        // { key: "/ManageFaculty", label: "Manage Faculty", roles: ["admin"] },
+        { key: "/Upload", label: "Upload Faculty", roles: ["admin"] },
+        {key: "/test", label: "test", roles: ['admin']}
       ],
     },
-    // { key: "/upload", label: "Upload", roles: ["staff", "admin"] },
   ];
+
+  // Filter menu based on user role
+  const filterMenuByRole = (items, userRole) => {
+    return items
+      .map((item) => {
+        if (item.roles && !item.roles.map((r) => r.toLowerCase()).includes(userRole?.toLowerCase())) {
+          return null;
+        }
+        if (item.children) {
+          const children = filterMenuByRole(item.children, userRole);
+          return children.length ? { ...item, children } : null;
+        }
+        return item;
+      })
+      .filter(Boolean)
+      .map((item) => ({
+        ...item,
+        key: item.key || item.label,
+        children: item.children?.map((child) => ({
+          ...child,
+          key: child.key || child.label,
+        })),
+      }));
+  };
 
   const allowedItems = filterMenuByRole(items, role);
 
   return (
-    <Header
-      className="d-flex align-items-center bg-white text-black dark:bg-gray-800 dark:text-white"
-      style={{ height: "80px", lineHeight: "80px", padding: "0 20px" }}
-    >
-      {/* 🔹 Logo */}
-      <div className="d-flex align-items-center mr-2">
-        <AppImage
-          name="Website logo"
-          lcp
-          style={{ height: "50px", borderRadius: "50%", objectFit: "cover" }}
-        />
-        <span className="fw-bold ml-2">My Website</span>
-      </div>
-
-      {/* 🔹 Menu */}
-      <div className="d-flex align-items-center" style={{ flex: 1 }}>
-        <Menu
-          mode="horizontal"
-          selectedKeys={[selectedKey]}
-          items={allowedItems}
-          style={{ flex: 1, justifyContent: "flex-end" }}
-          onClick={({ key }) => navigate(key)}
-        />
-
-        {/* 🔹 Profile (only if logged in) */}
-        {isLogin && (
-          <div className="d-flex align-items-center mr-2">
+    <div className="header-sticky">
+      <div className="nav-container">
+        <nav className="nav-bar">
+          <Link to="/Home" className="nav-brand d-flex align-items-center gap-m">
             <AppImage
-              data={image?.data}
-              name={name}
-              style={{
-                height: "50px",
-                borderRadius: "50%",
-                width: "50px",
-                objectFit: "cover",
-              }}
+              name="Website logo"
+              className={'rounded-full object-cover'}
+              style={{ height: "50px", width: "50px" }}
             />
-            <Link
-              to={"/Facultyinfo/" + id}
-              className="fw-bold ml-2 text-decoration-none"
-            >
-              {name}
-            </Link>
-          </div>
-        )}
+            <span className="font-bold text-[18px]">My Website</span>
+          </Link>
 
-        {/* 🔹 Logout button */}
-        {isLogin && (
-          <div className="d-flex align-items-center mr-2">
-            <AppButton
-              btnId="logoutBtn"
-              aria-label="Logout"
-              type="primary"
-              className='rounded-lg'
-              style={{ padding: "12px" }}
-              btnOnClick={() => {
-                dispatch(clearToken());
-                localStorage.removeItem("token");
-                navigate("/");
-              }}
-            ><LoginOutlined /></AppButton>
+          {/* Navbar links */}
+          <div className="nav-links">
+            {allowedItems.map((item) => (
+              <NavItem key={item.key} item={item} selectedKey={selectedKey} />
+            ))}
           </div>
-        )}
+
+          {/* User info + logout */}
+          {isLogin && (
+            <div className="d-flex align-items-center gap-2 me-2">
+              <AppImage
+                data={image?.data}
+                name={name}
+                className="rounded-circle rounded-full object-cover"
+                style={{ height: "50px", width: "50px"}}
+              />
+              <Link
+                to={`/Facultyinfo/${id}`}
+                className="font-bold text-[15px] text-decoration-none"
+              >
+                {name}
+              </Link>
+              <AppButton
+                btnId="logoutBtn"
+                aria-label="Logout"
+                type="primary"
+                className="rounded-lg btn-tall"
+                style={{ padding: "12px" }}
+                btnOnClick={() => {
+                  dispatch(clearToken());
+                  localStorage.removeItem("token");
+                  navigate("/");
+                }}
+              >
+                <LoginOutlined />
+              </AppButton>
+            </div>
+          )}
+        </nav>
       </div>
-    </Header>
+    </div>
   );
 }
+
+// Separate component for nav item with submenu
+
+
+// export default NavItem;

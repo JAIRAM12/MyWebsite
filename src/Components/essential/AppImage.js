@@ -1,28 +1,16 @@
 import { Image } from "antd";
-import { memo } from "react";
+import { memo, useState } from "react";
 
-const AppImage = ({ data, style, className, name, lcp = false, ...props }) => {
+const AppImage = ({ data, style, className, name, fallback = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+, lcp = false, ...props }) => {
   const base64 = data?.data || data;
-  const src = base64
-    ? `data:image/png;base64,${base64}`
-    : "/images/logo.jpg";
-
-  if (lcp) {
-    return (
-      <img
-        src={src}
-        alt={name}
-        style={style}
-        className={className}
-        fetchpriority="high"
-        {...props}
-      />
-    );
-  }
+  const [imgSrc, setImgSrc] = useState(
+    base64 ? `data:image/png;base64,${base64}` : "/images/logo.jpg"
+  );
 
   return (
     <Image
-      src={src}
+      src={imgSrc}
       alt={name}
       style={style}
       className={className}
@@ -30,10 +18,10 @@ const AppImage = ({ data, style, className, name, lcp = false, ...props }) => {
       fetchpriority="high"
       decoding="async"
       loading="eager"
+      onError={() => setImgSrc(fallback)}
       {...props}
     />
   );
 };
-
 
 export default memo(AppImage);

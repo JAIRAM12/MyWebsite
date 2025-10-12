@@ -1,16 +1,14 @@
-import { useEffect, useState, useRef, Children, useCallback, memo } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import AppButton from "../essential/AppButton";
-import Api from "../essential/API";
-import AppCard from "../essential/AppCard";
-import AppTabs from "../essential/AppTabs";
-import Detail from "./Components/Details";
-import StudentInfo from "./Components/Student";
-import { AppNotification } from "../essential/AppNotification";
-import { MessageType } from "../essential/enums";
-import AppImage from "../essential/AppImage";
-import AppTag from "../essential/AppTag";
-import Upcoming from "../essential/enums/FutureUpcoming";
+import AppButton from "../../essential/AppButton";
+import Api from "../../essential/API";
+import AppCard from "../../essential/AppCard";
+import AppTabs from "../../essential/AppTabs";
+import { AppNotification } from "../../essential/AppNotification";
+import { MessageType } from "../../essential/enums";
+import AppImage from "../../essential/AppImage";
+import Upcoming from "../../essential/enums/FutureUpcoming";
+import Detail from "./Components/Detail";
 
 const FacultyInfo = (props) => {
     const { id } = useParams();
